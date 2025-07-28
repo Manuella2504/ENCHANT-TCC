@@ -1,257 +1,461 @@
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Doações - Enchant</title>
-     <link rel="shortcut icon" href="https://i.ibb.co/7NybZ3W7/1.png" type="image/x-icon">
-     <link rel="stylesheet" href="../CSS/dashoboard.css">
-     <link rel="stylesheet" href="../CSS/barraheadercomprador.css">
-     <script src="../JS/dashboard.js"></script>
-
+    <title>Dashboard de Doações</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="https://phosphoricons.com?q=%22menu%22" />
+    <link rel="stylesheet" href="../CSS/barraheadercomprador.css" />
+    <link rel="stylesheet" href="../CSS/dashoboard.css">
+    <script src="../JS/barraheadercomprador.js"></script>
+    <script src="../JS/dashboard.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
+    <!-- Header com Perfil e Foto Dinâmica -->
+    <header>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+          <!-- Botão esquerdo para controlar a sidebar -->
+          <button
+            id="icone2"
+            class="navbar-toggler"
+            type="button"
+            onclick="toggleSidebar()"
+          >
+            <i style="font-size: 12px" class="navbar-toggler-icon"></i>
+          </button>
 
-<section>
-<header>
-<nav class="navbar navbar-expand-lg">
- <div class="container-fluid">
-   <!-- Botão esquerdo para controlar a sidebar -->
-   <button
-     id="icone2"
-     class="navbar-toggler"
-     type="button"
-     onclick="toggleSidebar()"
-   >
-     <i style="font-size: 12px" class="navbar-toggler-icon"></i>
-   </button>
+          <!-- Input File -->
+          <button class="upload-btn" id="imgheader">
+            <label for="imageUpload"
+              ><i class="bi bi-plus" id="btnn"></i
+            ></label>
+            <input
+              type="file"
+              id="imageUpload"
+              accept="image/*"
+              placeholder="Insira sua logo"
+            />
+          </button>
 
+          <!-- Botão direito para outras funcionalidades -->
+          <button
+            id="icone"
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+          >
+            <span style="font-size: 20px" class="bi bi-three-dots"></span>
+          </button>
+         
+          <!-- Navbar collapse - modificado para mobile -->
+          <div class="collapse navbar-collapse item" id="navbarNav">
+            <ul id="abcd" class="navbar-nav mx-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="quemsomos2.html">Quem somos?</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="saibamais2.html">Saiba mais</a>
+              </li>
+              <li class="nav-item profile-dropdown">
+                <button
+                  class="btn btn-link"
+                  id="usuario"
+                  style="font-size: 14px; text-decoration: none"
+                >
+                  <img
+                    id="userPhoto"
+                    src=""
+                    alt="Foto do Usuário"
+                    style="
+                      width: 40px;
+                      height: 40px;
+                      border-radius: 50%;
+                      object-fit: cover;
+                      display: none;
+                    "
+                  />
+                  <i
+                    id="userIcon"
+                    class="bi bi-person-circle"
+                    style="font-size: 35px; color: #000000"
+                  ></i>
+                  <span>Nome do Usuário</span>
+                </button>
+                <!-- Dropdown menu movido para dentro do item de lista -->
+                <div id="dropzinho" class="dropdown-menu">
+                  <a class="dropdown-item" href="perfilcomprador.html"
+                    ><i class="bi bi-person"></i> Perfil</a
+                  >
+                  <a class="dropdown-item" href="compradorantes.html"
+                    ><i class="bi bi-box-arrow-right"></i> Sair</a
+                  >
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
 
-   <!-- Input File -->
-   <button class="upload-btn" id="imgheader">
-     <label for="imageUpload"
-       ><i class="bi bi-plus" id="btnn"></i
-     ></label>
-     <input
-       type="file"
-       id="imageUpload"
-       accept="image/*"
-       placeholder="Insira sua logo"
-     />
-   </button>
+    <div class="page-content">
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <nav>
+          <a href="#"><i class="bi bi-list"></i><span></span></a>
+          <a href="mapa.html"
+            ><i class="bi bi-map"></i
+            ><span style="font-size: 14px">Mapa</span></a
+          >
+          <a href="pontosdeabrigo.html"
+            ><i class="bi bi-geo"></i
+            ><span style="font-size: 14px">Pontos de abrigo</span></a
+          >
+          <a href="ajudamedica.html"
+            ><i class="bi bi-truck"></i
+            ><span style="font-size: 14px">Ajuda médica</span></a
+          >
+          <a href="doacao.html"
+            ><i class="bi bi-box"></i
+            ><span style="font-size: 14px">Doação</span></a
+          >
+          <a href="pontosdecoleta.html"
+            ><i class="bi bi-geo-alt-fill"></i
+            ><span style="font-size: 14px">Pontos de coleta</span></a
+          >
+          <a href="historicodedoacoes.html"
+            ><i class="bi bi-journal"></i
+            ><span style="font-size: 14px">Histórico de doação</span></a
+          >
+          <a href="politica2.html"
+            ><i class="bi bi-file-earmark"></i
+            ><span style="font-size: 14px">Política de privacidade</span></a
+          >
+          <a href="ajuda.html"
+            ><i class="bi bi-info-circle"></i
+            ><span style="font-size: 14px">Ajuda</span></a
+          >
+        </nav>
+      </aside>
 
+      <!-- Modais do Instagram e Facebook -->
+      <div id="caixa-principal">
+        <div id="coisas-caixa">
+          <div
+            style="
+              display: flex;
+              justify-content: flex-start;
+              padding: 1.5rem;
+              height: 80px;
+            "
+          >
+            <button class="botao-sair" id="botao-sair">
+              <i class="bi bi-x-circle"></i>
+            </button>
+          </div>
+          <div id="instagramgeral">
+            <h2 id="texto-caixa">Insira aqui o Instagram da sua empresa</h2>
+            <h2 id="texto-caixa3">
+              Aqui você pode inserir o Instagram da sua empresa!
+            </h2>
+            <hr style="margin-top: 1px" />
+            <input
+              type="text"
+              id="instagram"
+              placeholder="Digite seu @ ou nome de usuário"
+            />
 
-   <!-- Botão direito para outras funcionalidades -->
-   <button
-     id="icone"
-     class="navbar-toggler"
-     type="button"
-     data-bs-toggle="collapse"
-     data-bs-target="#navbarNav"
-   >
-     <span style="font-size: 20px" class="bi bi-three-dots"></span>
-   </button>
-  
-   <!-- Navbar collapse - modificado para mobile -->
-   <div class="collapse navbar-collapse item" id="navbarNav">
-     <ul id="abcd" class="navbar-nav mx-auto">
-       <li class="nav-item">
-         <a class="nav-link" href="quemsomos2.html">Quem somos?</a>
-       </li>
-       <li class="nav-item">
-         <a class="nav-link" href="saibamais2.html">Saiba mais</a>
-       </li>
-       <li class="nav-item profile-dropdown">
-         <button
-           class="btn btn-link"
-           id="usuario"
-           style="font-size: 14px; text-decoration: none"
-         >
-           <img
-             id="userPhoto"
-             src=""
-             alt="Foto do Usuário"
-             style="
-               width: 40px;
-               height: 40px;
-               border-radius: 50%;
-               object-fit: cover;
-               display: none;
-             "
-           />
-           <i
-             id="userIcon"
-             class="bi bi-person-circle"
-             style="font-size: 35px; color: #ccc"
-           ></i>
-           <span>Nome do Usuário</span>
-         </button>
-         <!-- Dropdown menu movido para dentro do item de lista -->
-         <div id="dropzinho" class="dropdown-menu">
-           <a class="dropdown-item" href="#"
-             ><i class="bi bi-person"></i> Perfil</a
-           >
-           <a class="dropdown-item" href="compradorantes.html"
-             ><i class="bi bi-box-arrow-right"></i> Sair</a
-           >
-         </div>
-       </li>
-     </ul>
-   </div>
- </div>
-</nav>
-</header>
-</section>
+            <div id="confirmar">
+              <button id="botaocaixa" onclick="gerarLinkInstagram()">
+                Confirmar
+              </button>
+            </div>
+            <div id="linkContainer"></div>
+            <button id="editarLink" style="display: none">Editar</button>
+          </div>
+        </div>
+      </div>
 
-    <div class="container">
+      <div id="caixa-principal2">
+        <div id="coisas-caixa2">
+          <div
+            style="
+              display: flex;
+              justify-content: flex-start;
+              padding: 1.5rem;
+              height: 80px;
+            "
+          >
+            <button class="botao-sair" id="botao-sair2">
+              <i class="bi bi-x-circle"></i>
+            </button>
+          </div>
+          <div id="facebookgeral">
+            <h2 id="texto-caixa2">Insira aqui o Facebook da sua empresa</h2>
+            <h2 id="texto-caixa4">
+              Aqui você pode inserir o Facebook da sua empresa!
+            </h2>
+            <hr style="margin-top: 1px" />
+            <input
+              type="text"
+              id="facebook2"
+              placeholder="Digite seu @ ou nome de usuário"
+            />
+            <div id="confirmar2">
+              <button id="botaocaixa2" onclick="gerarLinkFacebook()">
+                Confirmar
+              </button>
+            </div>
+            <div id="linkContainer2"></div>
+            <button id="editarLink2" style="display: none">Editar</button>
+          </div>
+        </div>
+      </div>
 
-        <!-- Controles -->
-        <div class="controls">
-            <button class="btn btn-primary">Histórico de doações</button>
-            <button class="btn btn-secondary">Mapa de riscos</button>
+      <!-- Conteúdo Principal do Dashboard -->
+      <main id="main">
+        <div class="container">
+          <div class="header">
+              <div class="header-buttons">
+                  <button class="btn btn-outline" onclick="gerarRelatorio()">Relatório de doações</button>
+                  <button class="btn btn-primary" onclick="gerarPDF()">Gerar PDF</button>
+              </div>
+          </div>
+
+          <div class="main-content">
+              <div class="chart-section">
+                  <div class="chart-header">
+                      <h2 class="chart-title">Raio de Coleta kg</h2>
+                      <div class="chart-filter">
+                          <span>Período de análise:</span>
+                          <select class="filter-select" onchange="atualizarGrafico()">
+                              <option value ="mensal">Mensal</option>
+                              <option value ="semanal">Semanal</option>
+                              <option value ="anual">Anual</option>
+                          </select>
+                      </div>
+                  </div>
+                  
+                  <div class="chart-container">
+                      <canvas id="doacoesChart"></canvas>
+                  </div>
+                  
+                  <div class="chart-legend">
+                      <div class="legend-item">
+                          <div class="legend-color" style="background: #72330f;"></div>
+                          <span>Ativa alta variação</span>
+                      </div>
+                      <div class="legend-item">
+                          <div class="legend-color" style="background: #492a0f;"></div>
+                          <span>Ativa baixa variação</span>
+                      </div>
+                  </div>
+
+                  <!-- Organizations -->
+                  
+              </div>
+
+              <!-- Sidebar do Dashboard -->
+              <div class="dash-sidebar dashboard-sidebar">
+                  <div class="dash-sidebar-section">
+                      <div class="dash-sidebar-title">Pontos mais ativos</div>
+                      <div id="pontos-coleta">
+                          <!-- Pontos serão carregados dinamicamente -->
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="stats-grid">
+              <div class="stat-card">
+                  <div class="stat-number" id="stat-cadastros">30</div>
+                  <div class="stat-label">Número de doadores para registro</div>
+                  <div class="stat-change">Meta: 150 cadastros</div>
+              </div>
+              
+              <div class="stat-card">
+                  <div class="stat-number" id="stat-doacoes">90</div>
+                  <div class="stat-label">Número de doações para deferente</div>
+                  <div class="stat-change">Meta: 200 doações</div>
+              </div>
+              
+              <div class="stat-card" style="border: 2px solid #693d19;">
+                  <div class="stat-number" id="stat-pendentes">20</div>
+                  <div class="stat-label">Número de doações para gradução há</div>
+                  <div class="stat-change">Meta: 150 graduações</div>
+              </div>
+          </div>
+
+          <div class="stats-grid">
+              <div class="stat-card">
+                  <div class="stat-number" id="stat-triadas">50</div>
+                  <div class="stat-label">Número de doações triadas</div>
+                  <div class="stat-change">Meta: 200 triados</div>
+              </div>
+              
+              <div class="stat-card">
+                  <div class="stat-number" id="stat-finalizadas">100</div>
+                  <div class="stat-label">Número de doações para a</div>
+                  <div class="stat-change">Meta: 200 finalizadas</div>
+              </div>
+              
+              <div class="stat-card">
+                  <div class="stat-icon">⏱️</div>
+                  <div class="stat-number" id="stat-tempo">05</div>
+                  <div class="stat-label">Número de doações para a utilizados de qualificações</div>
+                  <div class="stat-change">Meta: 50 utilizados</div>
+              </div>
+          </div>
+
+          <!-- Achievement and Progress -->
+          <div style="display: grid; grid-template-columns: 300px 1fr; gap: 20px;">
+              <div>
+                  <div class="achievement-card">
+                      <div class="achievement-icon">🏆</div>
+                      <div class="achievement-text">Meta mensal de doações atingida com sucesso!</div>
+                  </div>
+                  
+                  <div class="progress-section">
+                      <div class="sidebar-title">Porcentual de completude</div>
+                      <div style="text-align: center; font-size: 36px; font-weight: 700; color: #333;">50%</div>
+                  </div>
+              </div>
+              
+              <div class="progress-section">
+                  <div class="progress-item">
+                      <div class="progress-icon">📦</div>
+                      <div class="progress-info">
+                          <div class="progress-label">Entradas</div>
+                          <div class="progress-bar">
+                              <div class="progress-fill" style="width: 75%;"></div>
+                          </div>
+                      </div>
+                      <div class="progress-percent">75%</div>
+                  </div>
+                  
+                  <div class="progress-item">
+                      <div class="progress-icon">🚚</div>
+                      <div class="progress-info">
+                          <div class="progress-label">Pedidos de coleta e</div>
+                          <div class="progress-bar">
+                              <div class="progress-fill" style="width: 60%;"></div>
+                          </div>
+                      </div>
+                      <div class="progress-percent">60%</div>
+                  </div>
+                  
+                  <div class="progress-item">
+                      <div class="progress-icon">📋</div>
+                      <div class="progress-info">
+                          <div class="progress-label">Pedidos de coleta e</div>
+                          <div class="progress-bar">
+                              <div class="progress-fill" style="width: 45%;"></div>
+                          </div>
+                      </div>
+                      <div class="progress-percent">45%</div>
+                  </div>
+                  
+                  <div class="progress-item">
+                      <div class="progress-icon">✅</div>
+                      <div class="progress-info">
+                          <div class="progress-label">Pedidos de coleta e</div>
+                          <div class="progress-bar">
+                              <div class="progress-fill" style="width: 80%;"></div>
+                          </div>
+                      </div>
+                      <div class="progress-percent">80%</div>
+                  </div>
+                  
+                  <div class="progress-item">
+                      <div class="progress-icon">🎯</div>
+                      <div class="progress-info">
+                          <div class="progress-label">Pedidos de coleta e</div>
+                          <div class="progress-bar">
+                              <div class="progress-fill" style="width: 30%;"></div>
+                          </div>
+                      </div>
+                      <div class="progress-percent">30%</div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-container">
+        <!-- Logo e descrição -->
+        <div class="footer-left">
+          <button class="upload-btn" id="imgfooter">
+            <label for="imgUpload"><i class="bi bi-plus" id="btnn2"></i></label>
+            <input type="file" id="imgUpload" accept="image/*" />
+          </button>
+
+          <p>
+            De forma alguma o site foi criado com o intuito de desviar os termos
+            relacionados à política de privacidade do cadastrante. O site está
+            disponível para toda e qualquer ajuda em relação aos contatos. O
+            site que aqui explica não aceita qualquer violência verbal, sendo
+            contra toda e qualquer atividade agressiva.
+          </p>
+          <p>© 2025 ENCHANT Brasil</p>
         </div>
 
-        <!-- Conteúdo principal -->
-        <div class="main-content">
-            <!-- Seção do gráfico -->
-            <div class="chart-section">
-                <div class="chart-container">
-                    <canvas id="rendimentoChart" class="chart-canvas"></canvas>
-                </div>
-                <div class="legend">
-                    <div class="legend-item">
-                        <div class="legend-color" style="background-color: #FF6B35;"></div>
-                        <span>Pontos de Coleta</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background-color: #4A4A4A;"></div>
-                        <span>Pontos de Abrigo</span>
-                    </div>
-                </div>
-            </div>
+        <!-- Links de navegação -->
+        <div class="footer-right">
+          <div class="footer-column">
+            <h3>MAIS INFORMAÇÕES</h3>
+            <a
+              href="saibamais1.html"
+              title="Conheça mais sobre o ENCHANT - clique"
+              >Conheça mais sobre o site</a
+            >
+          </div>
+          <div class="footer-column" title="PROTEÇÃO DE DADOS - clique">
+            <h3>PROTEÇÃO DE DADOS</h3>
+            <a href="politica1.html">Política de privacidade</a>
+          </div>
+          <div class="footer-column" title="ACOMPANHE NOSSAS REDES - clique">
+            <h3>ACOMPANHE NOSSAS REDES</h3>
 
-            <!-- Pontos de coleta -->
-            <div class="collection-points">
-                <div class="points-list">
-                    <h3>Ponto de coleta X:</h3>
-                    <div class="point-item">
-                        <div class="point-icon"></div>
-                        <span>10 DOAÇÕES</span>
-                        <span style="margin-left: auto; color: #666;">Pendente</span>
-                    </div>
-                    
-                    <h3 style="margin-top: 15px;">Ponto de coleta Y:</h3>
-                    <div class="point-item">
-                        <div class="point-icon"></div>
-                        <span>39 DOAÇÕES</span>
-                        <span style="margin-left: auto; color: #666;">Pendente</span>
-                    </div>
-                    
-                    <h3 style="margin-top: 15px;">Ponto de coleta Y:</h3>
-                    <div class="point-item">
-                        <div class="point-icon"></div>
-                        <span>1 DOAÇÕES</span>
-                        <span style="margin-left: auto; color: #666;">Pendente</span>
-                    </div>
-                    
-                    <h3 style="margin-top: 15px;">Ponto de coleta Y:</h3>
-                    <div class="point-item">
-                        <div class="point-icon"></div>
-                        <span>59 DOAÇÕES</span>
-                        <span style="margin-left: auto; color: #666;">Pendente</span>
-                    </div>
-                    
-                    <h3 style="margin-top: 15px;">Ponto de coleta Y:</h3>
-                    <div class="point-item">
-                        <div class="point-icon"></div>
-                        <span>10 DOAÇÕES</span>
-                        <span style="margin-left: auto; color: #666;">Pendente</span>
-                    </div>
-                    
-                    <h3 style="margin-top: 15px;">Ponto de coleta Y:</h3>
-                    <div class="point-item">
-                        <div class="point-icon"></div>
-                        <span>143 DOAÇÕES</span>
-                        <span style="margin-left: auto; color: #666;">Pendente</span>
-                    </div>
-                </div>
-            </div>
+            <button id="botao">Instagram</button>
+            <button id="facebook">Facebook</button>
+          </div>
         </div>
+      </div>
+    </footer>
 
-        <!-- Seção de relatórios -->
-        <div class="reports-section">
-            <div class="report-card">
-                <div class="report-icon">📊</div>
-                <h3>Relatório mais atualizado da histórico das doações recebidas.</h3>
-                <div style="background: #dc3545; color: white; padding: 10px; border-radius: 5px; margin-top: 15px;">
-                    <strong>PDF</strong><br>
-                    <small>723 KB</small>
-                </div>
-            </div>
-            <div class="report-card">
-                <div class="report-icon">📈</div>
-                <h3>Principais fluxos dos ONGs do Brasil, procure e entre que melhor se adeque ao que você precisa.</h3>
-                <div style="display: flex; gap: 10px; margin-top: 15px; justify-content: center;">
-                    <div style="background: #FFC107; padding: 8px; border-radius: 5px; font-size: 12px;">Portal</div>
-                    <div style="background: #FF9800; padding: 8px; border-radius: 5px; font-size: 12px;">Celesc</div>
-                    <div style="background: #4CAF50; padding: 8px; border-radius: 5px; font-size: 12px;">🌍</div>
-                </div>
-            </div>
-        </div>
+    <!-- Modal de Erro -->
+    <div class="modal fade" id="erroSenhaModal" tabindex="-1" aria-labelledby="erroSenhaModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="erroSenhaModalLabel">Atenção</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+              </div>
+              <div class="modal-body" id="erroSenhaModalBody">
+                  <!-- Mensagem de erro será inserida aqui -->
+              </div>
+              <div class="modal-footer">
+                  <button id="botao-validar" type="button" class="btn btn-primary" data-bs-dismiss="modal">Entendi</button>
+              </div>
+          </div>
+      </div>
+    </div>
 
-        <!-- Grid de estatísticas -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number">30</div>
-                <div class="stat-label">Número de doações para roupas:</div>
-                <div class="stat-sublabel">Menor que o mês passado</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">90</div>
-                <div class="stat-label">Número de doações para alimentos:</div>
-                <div class="stat-sublabel">Maior que o mês passado</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">20</div>
-                <div class="stat-label">Número de doações para produtos de higiene:</div>
-                <div class="stat-sublabel">Menor que o mês passado</div>
-            </div>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number">50</div>
-                <div class="stat-label">Número de doações para móveis:</div>
-                <div class="stat-sublabel">Maior que o mês passado</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">100</div>
-                <div class="stat-label">Número de doações para livros e brinquedos:</div>
-                <div class="stat-sublabel">Maior que o mês passado</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">05</div>
-                <div class="stat-label">Número de doações para roupas de cama e cobertores:</div>
-                <div class="stat-sublabel">Menor que o mês passado</div>
-            </div>
-        </div>
-
-        <!-- Seção de transparência -->
-        <div class="transparency-section">
-            <div class="transparency-card">
-                <div class="level-indicator">
-                    <div class="level-number">3</div>
-                    <div>Você ainda está no nível bronze, mas faça mais para alcançar melhor!</div>
-                    <div style="margin-top: 10px; color: #FFC107;">★ Como melhorar?</div>
-                </div>
-            </div>
-            <div class="transparency-card">
-                <h3 style="margin-bottom: 15px;">Percentual de transparência:</h3>
-                <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
-                    <div style="font-size: 48px;">👍</div>
-                    <div class="transparency-percentage">50%</div>
-                </div>
-            </div>
-        </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
