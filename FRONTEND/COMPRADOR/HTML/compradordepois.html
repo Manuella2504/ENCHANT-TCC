@@ -21,11 +21,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
-    <!-- Header com Perfil e Foto Dinâmica -->
     <header>
       <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-          <!-- Botão esquerdo para controlar a sidebar -->
           <button
             id="icone2"
             class="navbar-toggler"
@@ -35,7 +33,6 @@
             <i style="font-size: 12px" class="navbar-toggler-icon"></i>
           </button>
 
-          <!-- Input File -->
           <button class="upload-btn" id="imgheader">
             <label for="imageUpload"
               ><i class="bi bi-plus" id="btnn"></i
@@ -48,7 +45,6 @@
             />
           </button>
 
-          <!-- Botão direito para outras funcionalidades -->
           <button
             id="icone"
             class="navbar-toggler"
@@ -59,7 +55,6 @@
             <span style="font-size: 20px" class="bi bi-three-dots"></span>
           </button>
          
-          <!-- Navbar collapse - modificado para mobile -->
           <div class="collapse navbar-collapse item" id="navbarNav">
             <ul id="abcd" class="navbar-nav mx-auto">
               <li class="nav-item">
@@ -93,7 +88,6 @@
                   ></i>
                   <span>Nome do Usuário</span>
                 </button>
-                <!-- Dropdown menu movido para dentro do item de lista -->
                 <div id="dropzinho" class="dropdown-menu">
                   <a class="dropdown-item" href="perfilcomprador.html"
                     ><i class="bi bi-person"></i> Perfil</a
@@ -110,7 +104,6 @@
     </header>
 
     <div class="page-content">
-      <!-- Sidebar -->
       <aside class="sidebar" id="sidebar">
         <nav>
           <a href="#"><i class="bi bi-list"></i><span></span></a>
@@ -154,7 +147,6 @@
         </nav>
       </aside>
 
-      <!-- Modais do Instagram e Facebook -->
       <div id="caixa-principal">
         <div id="coisas-caixa">
           <div
@@ -227,8 +219,9 @@
           </div>
         </div>
       </div>
-<img src="../IMAGENS/imagempaginainicial.png" alt="Imagem inicial e chamativa do site!" id="imageminicial">
-      <!-- Conteúdo Principal do Dashboard -->
+
+
+
       <main id="main">
         <div class="container">
           <div class="header">
@@ -236,21 +229,58 @@
                   <button class="btn btn-outline" onclick="gerarRelatorio()">Relatório de doações</button>
                   <button class="btn btn-primary" onclick="gerarPDF()">Gerar PDF</button>
               </div>
+              <div class="date-filters">
+                  <div class="btn-group" role="group">
+                      <button type="button" class="btn btn-date-filter" onclick="atualizarDadosGlobais('dia')">Dia</button>
+                      <button type="button" class="btn btn-date-filter" onclick="atualizarDadosGlobais('semana')">Semana</button>
+                      <button type="button" class="btn btn-date-filter active" onclick="atualizarDadosGlobais('mes')">Mês</button>
+                      <button type="button" class="btn btn-date-filter" onclick="atualizarDadosGlobais('ano')">Ano</button>
+                  </div>
+                  <div class="custom-date-range">
+                      <i class="bi bi-calendar3"></i>
+                      <input type="date" id="startDate" onchange="atualizarDadosGlobais('custom')">
+                      <span>até</span>
+                      <input type="date" id="endDate" onchange="atualizarDadosGlobais('custom')">
+                  </div>
+              </div>
+          </div>
+          
+          <div class="summary-cards-container">
+            <div class="summary-card">
+              <div class="summary-card-icon"><i class="bi bi-box-seam"></i></div>
+              <div class="summary-card-info">
+                <div class="summary-card-value" id="summary-total-kg">--</div>
+                <div class="summary-card-label">Total Arrecadado (Kg)</div>
+              </div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-card-icon"><i class="bi bi-gem"></i></div>
+              <div class="summary-card-info">
+                <div class="summary-card-value" id="summary-media-kg">--</div>
+                <div class="summary-card-label">Média por Doação (Kg)</div>
+              </div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-card-icon"><i class="bi bi-person-plus"></i></div>
+              <div class="summary-card-info">
+                <div class="summary-card-value" id="summary-novos-doadores">--</div>
+                <div class="summary-card-label">Novos Doadores</div>
+              </div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-card-icon"><i class="bi bi-check-circle"></i></div>
+              <div class="summary-card-info">
+                <div class="summary-card-value" id="summary-taxa-sucesso">--</div>
+                <div class="summary-card-label">Taxa de Sucesso</div>
+              </div>
+            </div>
           </div>
 
           <div class="main-content">
               <div class="chart-section">
                   <div class="chart-header">
                       <h2 class="chart-title">Raio de Coleta kg</h2>
-                      <div class="chart-filter">
-                          <span>Período de análise:</span>
-                          <select class="filter-select" onchange="atualizarGrafico()">
-                              <option value ="mensal">Mensal</option>
-                              <option value ="semanal">Semanal</option>
-                              <option value ="anual">Anual</option>
-                          </select>
                       </div>
-                  </div>
                   
                   <div class="chart-container">
                       <canvas id="doacoesChart"></canvas>
@@ -266,23 +296,17 @@
                           <span>Ativa baixa variação</span>
                       </div>
                   </div>
-
-                  <!-- Organizations -->
-                  
               </div>
 
-              <!-- Sidebar do Dashboard -->
               <div class="dash-sidebar dashboard-sidebar">
                   <div class="dash-sidebar-section">
                       <div class="dash-sidebar-title">Pontos mais ativos</div>
                       <div id="pontos-coleta">
-                          <!-- Pontos serão carregados dinamicamente -->
-                      </div>
+                          </div>
                   </div>
               </div>
           </div>
 
-          <!-- Stats Grid -->
           <div class="stats-grid">
               <div class="stat-card-1">
                   <div class="stat-number" id="stat-cadastros">30</div>
@@ -323,7 +347,6 @@
               </div>
           </div>
 
-          <!-- Achievement and Progress -->
           <div style="display: grid; grid-template-columns: 300px 1fr; gap: 20px;">
               <div>
                   <div class="achievement-card">
@@ -333,7 +356,7 @@
                   
                   <div class="progress-section">
                       <div class="sidebar-title">Porcentual de completude</div>
-                      <div style="text-align: center; font-size: 36px; font-weight: 700; color: #333;">50%</div>
+                      <div style="text-align: center; font-size: 36px; font-weight: 700; color: #492a0f;">50%</div>
                   </div>
               </div>
               
@@ -398,10 +421,8 @@
       </main>
     </div>
 
-    <!-- Footer -->
     <footer>
       <div class="footer-container">
-        <!-- Logo e descrição -->
         <div class="footer-left">
           <button class="upload-btn" id="imgfooter">
             <label for="imgUpload"><i class="bi bi-plus" id="btnn2"></i></label>
@@ -418,7 +439,6 @@
           <p>© 2025 ENCHANT Brasil</p>
         </div>
 
-        <!-- Links de navegação -->
         <div class="footer-right">
           <div class="footer-column">
             <h3>MAIS INFORMAÇÕES</h3>
@@ -442,7 +462,6 @@
       </div>
     </footer>
 
-    <!-- Modal de Erro -->
     <div class="modal fade" id="erroSenhaModal" tabindex="-1" aria-labelledby="erroSenhaModalLabel" aria-hidden="true">
       <div class="modal-dialog">
           <div class="modal-content">
@@ -451,12 +470,47 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
               </div>
               <div class="modal-body" id="erroSenhaModalBody">
-                  <!-- Mensagem de erro será inserida aqui -->
-              </div>
+                  </div>
               <div class="modal-footer">
                   <button id="botao-validar" type="button" class="btn btn-primary" data-bs-dismiss="modal">Entendi</button>
               </div>
           </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="relatorioModal" tabindex="-1" aria-labelledby="relatorioModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="relatorioModalLabel"><i class="bi bi-file-earmark-text-fill"></i> Relatório Resumido de Doações</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Este é um resumo dos dados para o período selecionado. Para uma análise completa, clique em "Ver Relatório Detalhado".</p>
+            <div class="relatorio-grid">
+              <div class="relatorio-item">
+                <span class="relatorio-label">Total Arrecadado (Kg)</span>
+                <span class="relatorio-value" id="modal-total-kg">--</span>
+              </div>
+              <div class="relatorio-item">
+                <span class="relatorio-label">Novos Doadores</span>
+                <span class="relatorio-value" id="modal-novos-doadores">--</span>
+              </div>
+              <div class="relatorio-item">
+                <span class="relatorio-label">Doações Registradas</span>
+                <span class="relatorio-value" id="modal-doacoes">--</span>
+              </div>
+              <div class="relatorio-item">
+                <span class="relatorio-label">Doações Finalizadas</span>
+                <span class="relatorio-value" id="modal-finalizadas">--</span>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            <a href="relatorio-detalhado.html" class="btn btn-primary">Ver Relatório Detalhado</a>
+          </div>
+        </div>
       </div>
     </div>
 

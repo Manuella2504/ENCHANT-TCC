@@ -1,222 +1,224 @@
- // Dados simulados dos pontos de coleta
-        const pontosColeta = [
-            { nome: 'Entradas', status: '3 doadores', ativo: true },
-            { nome: 'Pedidos de coleta e', status: 'arrecadou', ativo: true },
-            { nome: 'Pedidos de coleta e', status: 'arrecadou', ativo: true },
-            { nome: 'Pedidos de coleta e', status: 'arrecadou', ativo: true },
-            { nome: 'Pedidos de coleta e', status: 'arrecadou', ativo: true }
-        ];
+let graficoAtual = null;
+let globalPeriodo = 'mes'; // Guarda o período selecionado
 
-        // Dados do gráfico
-        const dadosGrafico = {
-            mensal: {
-                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                alta: [25, 30, 28, 35, 32, 40, 38, 45, 42, 38, 35, 40],
-                baixa: [15, 18, 22, 20, 25, 30, 28, 32, 30, 28, 25, 30]
+function calcularMaximoSugerido(dados) {
+    const maxAlta = Math.max(...dados.alta);
+    const maxBaixa = Math.max(...dados.baixa);
+    const maxData = Math.max(maxAlta, maxBaixa);
+    const suggestedMax = Math.ceil((maxData * 1.2) / 50) * 50;
+    return suggestedMax > 0 ? suggestedMax : 100;
+}
+
+function gerarDadosGrafico(periodo) {
+    const dados = { labels: [], alta: [], baixa: [] };
+
+    const hourlyLabels = Array.from({ length: 12 }, (_, i) => `${i * 2}h`); // Labels de 2 em 2 horas
+    const weeklyLabels = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+    
+    const periodosConfig = {
+        dia: { count: 12, labels: hourlyLabels, max: 15 },
+        semana: { count: 7, labels: weeklyLabels, max: 80 },
+        mes: { count: 30, labels: Array.from({ length: 30 }, (_, i) => `${i + 1}`), max: 150 },
+        ano: { count: 12, labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], max: 500 }
+    };
+
+    const config = periodosConfig[periodo] || periodosConfig.mes;
+    dados.labels = config.labels;
+
+    for (let i = 0; i < config.count; i++) {
+        const baixaValue = Math.floor(Math.random() * (config.max / 2)) + (config.max / 4);
+        const altaValue = baixaValue + Math.floor(Math.random() * (config.max / 3)) + 10;
+        dados.baixa.push(baixaValue);
+        dados.alta.push(altaValue);
+    }
+
+    return dados;
+}
+
+function atualizarSummaryCards(scalingFactor = 30) {
+    const totalKg = ((Math.random() * 15 + 35) * scalingFactor).toFixed(0);
+    const mediaKg = (Math.random() * 5 + 10).toFixed(1);
+    const novosDoadores = (Math.max(1, (Math.random() * 1.5) * scalingFactor)).toFixed(0);
+    const taxaSucesso = (Math.random() * 7 + 91).toFixed(1) + '%';
+    
+    document.getElementById('summary-total-kg').textContent = new Intl.NumberFormat('pt-BR').format(totalKg);
+    document.getElementById('summary-media-kg').textContent = mediaKg;
+    document.getElementById('summary-novos-doadores').textContent = new Intl.NumberFormat('pt-BR').format(novosDoadores);
+    document.getElementById('summary-taxa-sucesso').textContent = taxaSucesso;
+}
+
+function atualizarEstatisticas(scalingFactor = 30) {
+    const formatNumber = (num) => new Intl.NumberFormat('pt-BR').format(num.toFixed(0));
+
+    const estatisticas = {
+        cadastros: formatNumber(Math.max(1, (Math.random() * 1) * scalingFactor)),
+        doacoes: formatNumber(Math.max(1, (Math.random() * 3) * scalingFactor)),
+        pendentes: formatNumber(Math.max(1, (Math.random() * 0.5) * scalingFactor)),
+        triadas: formatNumber(Math.max(1, (Math.random() * 2) * scalingFactor)),
+        finalizadas: formatNumber(Math.max(1, (Math.random() * 2.8) * scalingFactor)),
+        tempo: (Math.random() * 5 + 2).toFixed(0)
+    };
+    
+    Object.keys(estatisticas).forEach(key => {
+        const elemento = document.getElementById(`stat-${key}`);
+        if (elemento) elemento.textContent = estatisticas[key];
+    });
+}
+
+
+const pontosColeta = [
+    { nome: 'Entradas', status: '3 doadores', ativo: true },
+    { nome: 'Pedidos de coleta e', status: 'arrecadou', ativo: true },
+    { nome: 'Pedidos de coleta e', status: 'arrecadou', ativo: true },
+    { nome: 'Pedidos de coleta e', status: 'arrecadou', ativo: true },
+    { nome: 'Pedidos de coleta e', status: 'arrecadou', ativo: true }
+];
+
+function inicializarDashboard() {
+    carregarPontosColeta();
+    criarGrafico();
+    atualizarDadosGlobais('mes');
+}
+
+function carregarPontosColeta() {
+    const container = document.getElementById('pontos-coleta');
+    container.innerHTML = '';
+    
+    pontosColeta.forEach(ponto => {
+        const pontoElement = document.createElement('div');
+        pontoElement.className = 'collection-point';
+        pontoElement.innerHTML = `
+            <div class="point-icon"></div>
+            <div class="point-info">
+                <div class="point-name">${ponto.nome}</div>
+                <div class="point-status">${ponto.status}</div>
+            </div>
+            <div class="point-arrow">›</div>
+        `;
+        container.appendChild(pontoElement);
+    });
+}
+
+function criarGrafico() {
+    const ctx = document.getElementById('doacoesChart').getContext('2d');
+    
+    if (graficoAtual) {
+        graficoAtual.destroy();
+    }
+    
+    graficoAtual = new Chart(ctx, {
+        type: 'line',
+        data: { labels: [], datasets: [ { data: [] }, { data: [] } ]}, // Inicia vazio
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, grid: { color: '#9e6634' }, ticks: { color: '#9e6634' } },
+                x: { grid: { color: '#9e6634' }, ticks: { color: '#9e6634' } }
             },
-            semanal: {
-                labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-                alta: [20, 25, 30, 28, 35, 40, 32],
-                baixa: [15, 20, 25, 22, 28, 30, 25]
-            },
-            anual: {
-                labels: ['2020', '2021', '2022', '2023', '2024', '2025'],
-                alta: [200, 250, 300, 350, 400, 380],
-                baixa: [150, 180, 220, 260, 300, 280]
-            }
-        };
-
-        let graficoAtual = null;
-
-        // Inicializar dashboard
-        function inicializarDashboard() {
-            carregarPontosColeta();
-            criarGrafico();
-            atualizarEstatisticas();
+            elements: { point: { hoverRadius: 6 } }
         }
+    });
+}
 
-        // Carregar pontos de coleta na sidebar
-        function carregarPontosColeta() {
-            const container = document.getElementById('pontos-coleta');
-            container.innerHTML = '';
-            
-            pontosColeta.forEach(ponto => {
-                const pontoElement = document.createElement('div');
-                pontoElement.className = 'collection-point';
-                pontoElement.innerHTML = `
-                    <div class="point-icon"></div>
-                    <div class="point-info">
-                        <div class="point-name">${ponto.nome}</div>
-                        <div class="point-status">${ponto.status}</div>
-                    </div>
-                    <div class="point-arrow">›</div>
-                `;
-                container.appendChild(pontoElement);
-            });
+function atualizarGrafico(periodo) {
+    const dados = gerarDadosGrafico(periodo);
+    const maxSugerido = calcularMaximoSugerido(dados);
+    
+    graficoAtual.data.labels = dados.labels;
+    graficoAtual.data.datasets = [
+        {
+            label: 'Ativa alta variação',
+            data: dados.alta,
+            borderColor: 'rgb(224, 174, 124)',
+            tension: 0.4,
+            fill: false,
+        },
+        {
+            label: 'Ativa baixa variação',
+            data: dados.baixa,
+            borderColor: 'rgb(123, 71, 26)',
+            tension: 0.4,
+            fill: false,
         }
+    ];
+    graficoAtual.options.scales.y.suggestedMax = maxSugerido;
+    graficoAtual.update();
+}
 
-        // Criar gráfico
-        function criarGrafico() {
-            const ctx = document.getElementById('doacoesChart').getContext('2d');
-            const dados = dadosGrafico.mensal;
-            
-            if (graficoAtual) {
-                graficoAtual.destroy();
-            }
-            
-            graficoAtual = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: dados.labels,
-                    datasets: [
-                        {
-                            label: 'Ativa alta variação',
-                            data: dados.alta,
-                            borderColor: '#e74c3c',
-                            backgroundColor: 'rgba(231, 76, 60, 0.1)',
-                            tension: 0.4,
-                            fill: false,
-                            pointBackgroundColor: '#e74c3c',
-                            pointBorderColor: '#e74c3c',
-                            pointRadius: 4
-                        },
-                        {
-                            label: 'Ativa baixa variação',
-                            data: dados.baixa,
-                            borderColor: '#e67e22',
-                            backgroundColor: 'rgba(230, 126, 34, 0.1)',
-                            tension: 0.4,
-                            fill: false,
-                            pointBackgroundColor: '#e67e22',
-                            pointBorderColor: '#e67e22',
-                            pointRadius: 4
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: '#f0f0f0'
-                            },
-                            ticks: {
-                                color: '#666'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: '#f0f0f0'
-                            },
-                            ticks: {
-                                color: '#666'
-                            }
-                        }
-                    },
-                    elements: {
-                        point: {
-                            hoverRadius: 6
-                        }
-                    }
-                }
-            });
+function atualizarDadosGlobais(periodo) {
+    globalPeriodo = periodo;
+
+    document.querySelectorAll('.btn-date-filter').forEach(btn => btn.classList.remove('active'));
+    if (periodo !== 'custom') {
+        const activeButton = document.querySelector(`.btn-date-filter[onclick="atualizarDadosGlobais('${periodo}')"]`);
+        if(activeButton) activeButton.classList.add('active');
+    }
+    
+    let scalingFactor = 30;
+    const periodFactors = { dia: 1, semana: 7, mes: 30, ano: 365 };
+    if (periodFactors[periodo]) {
+        scalingFactor = periodFactors[periodo];
+    } else if (periodo === 'custom') {
+        const startDate = new Date(document.getElementById('startDate').value);
+        const endDate = new Date(document.getElementById('endDate').value);
+        if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime()) && endDate > startDate) {
+            const diffTime = Math.abs(endDate - startDate);
+            scalingFactor = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+        } else {
+            return; // Não atualiza se o intervalo customizado for inválido
         }
+    }
+    
+    atualizarGrafico(periodo);
+    atualizarSummaryCards(scalingFactor);
+    atualizarEstatisticas(scalingFactor);
+}
 
-        // Atualizar gráfico baseado no filtro
-        function atualizarGrafico() {
-            const filtro = document.querySelector('.filter-select').value;
-            const dados = dadosGrafico[filtro];
-            
-            graficoAtual.data.labels = dados.labels;
-            graficoAtual.data.datasets[0].data = dados.alta;
-            graficoAtual.data.datasets[1].data = dados.baixa;
-            graficoAtual.update();
-        }
+function gerarRelatorio() {
+    // 1. Coletar os dados mais recentes da página
+    const totalKg = document.getElementById('summary-total-kg').textContent;
+    const novosDoadores = document.getElementById('summary-novos-doadores').textContent;
+    const doacoesRegistradas = document.getElementById('stat-doacoes').textContent;
+    const doacoesFinalizadas = document.getElementById('stat-finalizadas').textContent;
 
-        // Simular dados do banco de dados
-        function atualizarEstatisticas() {
-            // Simular chamada para API/banco de dados
-            const estatisticas = {
-                cadastros: Math.floor(Math.random() * 50) + 30,
-                doacoes: Math.floor(Math.random() * 30) + 80,
-                pendentes: Math.floor(Math.random() * 10) + 15,
-                triadas: Math.floor(Math.random() * 20) + 40,
-                finalizadas: Math.floor(Math.random() * 50) + 80,
-                tempo: Math.floor(Math.random() * 10) + 1
-            };
-            
-            // Atualizar elementos na tela
-            Object.keys(estatisticas).forEach(key => {
-                const elemento = document.getElementById(`stat-${key}`);
-                if (elemento) {
-                    elemento.textContent = estatisticas[key];
-                }
-            });
-        }
+    // 2. Popular o modal com os dados coletados
+    document.getElementById('modal-total-kg').textContent = totalKg;
+    document.getElementById('modal-novos-doadores').textContent = novosDoadores;
+    document.getElementById('modal-doacoes').textContent = doacoesRegistradas;
+    document.getElementById('modal-finalizadas').textContent = doacoesFinalizadas;
 
-        // Gerar relatório de doações
-        function gerarRelatorio() {
-            // Simular geração de relatório
-            alert('Gerando relatório de doações...\n\nDados simulados do banco:\n- Total de doações: 245\n- Doações ativas: 180\n- Doações pendentes: 45\n- Doações finalizadas: 200');
-        }
+    // 3. Instanciar e exibir o modal do Bootstrap
+    const relatorioModal = new bootstrap.Modal(document.getElementById('relatorioModal'));
+    relatorioModal.show();
+}
 
-        // Gerar PDF do dashboard
-        function gerarPDF() {
-            // Usar jsPDF para gerar PDF
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            
-            // Título
-            doc.setFontSize(20);
-            doc.text('Dashboard de Doações', 20, 30);
-            
-            // Data atual
-            doc.setFontSize(12);
-            doc.text(`Relatório gerado em: ${new Date().toLocaleDateString('pt-BR')}`, 20, 50);
-            
-            // Estatísticas
-            doc.setFontSize(14);
-            doc.text('Estatísticas:', 20, 70);
-            
-            const stats = [
-                `Doadores para registro: ${document.getElementById('stat-cadastros').textContent}`,
-                `Doações deferentes: ${document.getElementById('stat-doacoes').textContent}`,
-                `Doações para graduação: ${document.getElementById('stat-pendentes').textContent}`,
-                `Doações triadas: ${document.getElementById('stat-triadas').textContent}`,
-                `Doações finalizadas: ${document.getElementById('stat-finalizadas').textContent}`
-            ];
-            
-            let y = 90;
-            stats.forEach(stat => {
-                doc.text(`• ${stat}`, 25, y);
-                y += 15;
-            });
-            
-            // Pontos de coleta
-            doc.text('Pontos de Coleta Ativos:', 20, y + 10);
-            y += 25;
-            
-            pontosColeta.forEach(ponto => {
-                doc.text(`• ${ponto.nome} - ${ponto.status}`, 25, y);
-                y += 10;
-            });
-            
-            // Salvar PDF
-            doc.save('dashboard-doacoes.pdf');
-        }
+function gerarPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFontSize(20);
+    doc.text('Dashboard de Doações', 20, 30);
+    doc.setFontSize(12);
+    doc.text(`Relatório gerado em: ${new Date().toLocaleDateString('pt-BR')}`, 20, 50);
+    doc.setFontSize(14);
+    doc.text('Estatísticas:', 20, 70);
+    const stats = [
+        `Doadores para registro: ${document.getElementById('stat-cadastros').textContent}`,
+        `Doações deferentes: ${document.getElementById('stat-doacoes').textContent}`,
+        `Doações para graduação: ${document.getElementById('stat-pendentes').textContent}`,
+        `Doações triadas: ${document.getElementById('stat-triadas').textContent}`,
+        `Doações finalizadas: ${document.getElementById('stat-finalizadas').textContent}`
+    ];
+    let y = 80;
+    stats.forEach(stat => { doc.text(`• ${stat}`, 25, y); y += 10; });
+    doc.save('dashboard-doacoes.pdf');
+}
 
-        // Atualizar dados periodicamente (simular tempo real)
-        setInterval(() => {
-            atualizarEstatisticas();
-        }, 30000); // Atualizar a cada 30 segundos
+setInterval(() => {
+    if (globalPeriodo !== 'custom') {
+       atualizarDadosGlobais(globalPeriodo);
+    }
+}, 30000);
 
-        // Inicializar quando a página carregar
-        document.addEventListener('DOMContentLoaded', inicializarDashboard);
-   
+document.addEventListener('DOMContentLoaded', inicializarDashboard);
