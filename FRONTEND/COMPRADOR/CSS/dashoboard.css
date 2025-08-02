@@ -552,3 +552,65 @@ color: #000000;
         flex-grow: 1;
     }
 }
+@media (max-width: 1700px){
+
+   #main{
+    display: flex;
+    margin-left: 5px;
+    margin-right: 5px;
+    }
+
+    .stat-card-1,
+    .stat-card-2,
+    .stat-card-3,
+    .stat-card-4,
+    .stat-card-5
+    {
+        width: 300px;
+        height: 150px;
+    }
+
+    .stats-grid{
+        gap: 10px;
+    }
+
+    .container{
+        margin-left: 80px;
+    }
+
+    #doacoesChart{
+        width: 300px;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 600px){
+
+   #main{
+    display: flex;
+    margin-left: 5px;
+    margin-right: 5px;
+    }
+
+    .stat-card-1,
+    .stat-card-2,
+    .stat-card-3,
+    .stat-card-4,
+    .stat-card-5
+    {
+        width: 150px;
+        height: 100px;
+    }
+
+    .stats-grid{
+        gap: 10px;
+    }
+
+    .container{
+        margin-left: 20px;
+    }
+
+    #doacoesChart{
+        width: 5px;
+        margin-left: 5px;
+    }
+}
