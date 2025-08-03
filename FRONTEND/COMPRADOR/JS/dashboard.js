@@ -68,10 +68,10 @@ function atualizarEstatisticas(scalingFactor = 30) {
 
 const pontosColeta = [
     { nome: 'Entradas', status: '3 doadores', ativo: true },
-    { nome: 'Pedidos de coleta e', status: 'arrecadou', ativo: true },
-    { nome: 'Pedidos de coleta e', status: 'arrecadou', ativo: true },
-    { nome: 'Pedidos de coleta e', status: 'arrecadou', ativo: true },
-    { nome: 'Pedidos de coleta e', status: 'arrecadou', ativo: true }
+    { nome: 'Ponto de coleta X', status: 'arrecadou', ativo: true },
+    { nome: 'Ponto de coleta Y', status: 'arrecadou', ativo: true },
+    { nome: 'Ponto de coleta W', status: 'arrecadou', ativo: true },
+    { nome: 'Ponto de coleta S', status: 'arrecadou', ativo: true }
 ];
 
 function inicializarDashboard() {
@@ -222,3 +222,4 @@ setInterval(() => {
 }, 30000);
 
 document.addEventListener('DOMContentLoaded', inicializarDashboard);
+

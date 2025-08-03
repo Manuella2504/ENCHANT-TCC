@@ -49,6 +49,15 @@ border: none;
 background-color: #caae8d;
 color: #3d2106;
 }
+.btn-secondary{
+background-color: transparent;
+color: #42270f;
+}
+
+.btn-secondary:hover {
+  background-color: #caae8d; 
+  color: #3d2106; 
+}
 
 .main-content {
 display: grid;
