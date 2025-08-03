@@ -13,95 +13,119 @@
         }
 
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+     .container {
+    width: calc(100% - 250px);
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    max-width: 1500px;
+}
 
+.aaa{
+ text-decoration:none;
+}   
 
 
         h1 {
             font-family: 'Passion One', cursive;
             font-size: 32px;
-            color: #8B4513;
+            color: #693B11;
             text-align: center;
             margin-bottom: 40px;
             font-weight: 400;
             margin-top: 100px;
         }
 
-
         .nav-tabs {
-            display: flex;
-            justify-content: center;
-            border-bottom: 2px solid #ddd;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+    display: flex;
+    justify-content: center;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 22px;
+}
+
+#imgheader {
+margin-top: -1px;
+}
 
 
-        .nav-tab {
-            text-decoration: none;
-            background: none;
-            border: none;
-            padding: 15px 20px;
-            cursor: pointer;
-            font-family: 'Lexend Deca', sans-serif;
-            font-size: 14px;
-            color: #666;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-            position: relative;
-        }
+.nav-tab {
+    text-decoration: none;
+    background: none;
+    border: none;
+    padding: 15px 10px;
+    cursor: pointer;
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 14px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+    width: 100%;
+    
+}
 
 
-        .nav-tab.active {
-            color: #8B4513;
-            border-bottom-color: #8B4513;
-        }
+.nav-tab.active {
+    color: #8B4513;
+    border-bottom-color: #8B4513;
+}
 
 
-        .nav-tab:hover {
-            color: #8B4513;
-        }
+.nav-tab:hover {
+    color: #8B4513;
+}
 
 
-        .icon {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-            flex-shrink: 0;
-        }
+.icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
 
 
-        .tab-text {
-            white-space: nowrap;
-        }
+/* Media query para telas pequenas */
+@media (max-width: 768px) {
+    .nav-tab {
+        padding: 12px 8px; /* Reduz o padding para economizar espaço */
+        font-size: 0; /* Esconde o texto */
+        gap: 0; /* Remove o gap entre ícone e texto */
+        min-width: 44px; /* Garante área mínima para toque */
+        justify-content: center;
+    }
+   
+    .nav-tab .icon {
+        width: 24px; /* Aumenta ligeiramente o ícone para melhor visibilidade */
+        height: 24px;
+    }
+   
+    .nav-tabs {
+        gap: 5px; /* Reduz o espaçamento entre os botões */
+    }
+}
 
 
-        /* Tooltip for mobile devices */
-        .nav-tab::after {
-            content: attr(data-title);
-            position: absolute;
-            bottom: -35px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
+/* Para telas muito pequenas (smartphones) */
+@media (max-width: 480px) {
+    .nav-tab {
+        padding: 10px 6px;
+        min-width: 40px;
+    }
+   
+    .nav-tab .icon {
+        width: 22px;
+        height: 22px;
+    }
+   
+    .nav-tabs {
+        gap: 3px;
+        margin-bottom: 30px;
+    }
+}
+
 
 
         .page {
@@ -265,6 +289,13 @@
             display: none;
         }
 
+        #btnn {
+margin-left: 25px;
+}
+
+        #btnn2 {
+margin-left: -25px;
+}
 
 
 
@@ -1029,7 +1060,10 @@
 
 
         @media (max-width: 768px) {
-
+.container {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
 
 
 
@@ -1040,33 +1074,7 @@
             }
 
 
-             .nav-tabs {
-                gap: 5px;
-                margin-bottom: 30px;
-            }
-           
-            .nav-tab {
-                padding: 12px 10px;
-                min-width: 50px;
-                justify-content: center;
-            }
-           
-            .nav-tab .tab-text {
-                display: none;
-            }
-           
-            .icon {
-                width: 22px;
-                height: 22px;
-            }
-           
-            /* Mostrar tooltip no hover para tablets */
-            .nav-tab:hover::after {
-                opacity: 1;
-                visibility: visible;
-            }
-           
-
+        
 
 
 
@@ -1155,30 +1163,7 @@
 
 
         @media (max-width: 480px) {
- .nav-tabs {
-                gap: 2px;
-                margin-bottom: 20px;
-                padding: 0 5px;
-            }
-           
-            .nav-tab {
-                padding: 10px 8px;
-                min-width: 45px;
-                border-radius: 8px 8px 0 0;
-            }
-           
-            .icon {
-                width: 20px;
-                height: 20px;
-            }
-           
-            /* Mostrar tooltip no toque para smartphones */
-            .nav-tab:active::after {
-                opacity: 1;
-                visibility: visible;
-            }
-
-
+ 
             .upload-section {
                 padding: 20px;
             }
@@ -1208,37 +1193,29 @@
 
                 @media screen and (max-width: 1024px) {
             .container {
-            margin-left: 20px;
-            margin-right: 20px;
-            }
+        margin-left: 50px;
+        margin-right: 50px;
+    }
            
             h1 {
                 font-size: 2rem;
                 margin-bottom: 30px;
             }
            
-            .nav-tab {
-                padding: 12px 16px;
-                font-size: 13px;
-            }
         }
 
 
         @media screen and (max-width: 320px) {
+ .container {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
             h1 {
                 font-size: 1.3rem;
                 line-height: 1.2;
             }
-           
-            .nav-tab {
-                padding: 8px 6px;
-                min-width: 40px;
-            }
-           
-            .icon {
-                width: 18px;
-                height: 18px;
-            }
+          
            
             .upload-section {
                 padding: 12px;
