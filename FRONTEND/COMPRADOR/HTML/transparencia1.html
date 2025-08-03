@@ -20,7 +20,7 @@
  <link rel="stylesheet" href="https://phosphoricons.com?q=%22menu%22" />
  <link rel="stylesheet" href="../CSS/barraheadercomprador.css">
     <link rel="stylesheet" href="../CSS/transparencia123.css">
-    <script src="../JS/transparencia123.js"></script>
+    <script src="../JS/transparencia1.js"></script>
 </head>
 <body>
 
@@ -245,74 +245,63 @@
     <a class="nav-tab" href="parcerias.html">Parcerias</a>
 </div>
 
-               <!-- Página 1 - Relatórios -->
-        <div class="page active" id="page1">
-            <div class="upload-section">
-                <div class="validation-info">
-                    <h4>Requisitos para Relatórios de Transparência:</h4>
-                    <ul>
-                        <li>Título deve ser claro e descritivo (mínimo 10 caracteres)</li>
-                        <li>Descrição detalhada do conteúdo (mínimo 20 caracteres)</li>
-                        <li>Arquivo em formato PDF, DOC ou XLS (máximo 10MB)</li>
-                        <li>Evite caracteres especiais no título</li>
-                    </ul>
+        <div class="upload-section">
+            <div class="validation-info">
+                <h4>Requisitos para Relatórios de Transparência:</h4>
+                <ul>
+                    <li>Título deve ser claro e descritivo (mínimo 10 caracteres)</li>
+                    <li>Descrição detalhada do conteúdo (mínimo 20 caracteres)</li>
+                    <li>Arquivo em formato PDF, DOC ou XLS (máximo 10MB)</li>
+                    <li>Evite caracteres especiais no título</li>
+                </ul>
+            </div>
+            
+            <div class="success-message" id="success-reports">Relatório adicionado com sucesso!</div>
+            <div class="alert-message" id="alert-reports"></div>
+            
+            <h2>Adicionar Relatórios</h2>
+            <form id="reports-form">
+                <div class="form-group required">
+                    <label for="report-title">Título do Relatório</label>
+                    <input type="text" id="report-title" placeholder="Ex: Despesas operacionais 1º trimestre 2024">
+                    <div class="error-message" id="report-title-error"></div>
                 </div>
-               
-                <div class="success-message" id="success-reports">Relatório adicionado com sucesso!</div>
-                <div class="alert-message" id="alert-reports"></div>
-               
-                <h2>Adicionar Relatórios</h2>
-                <form id="reports-form">
-                    <div class="form-group required">
-                        <label for="report-title">Título do Relatório</label>
-                        <input type="text" id="report-title" placeholder="Ex: Despesas operacionais 1º trimestre 2024">
-                        <div class="error-message" id="report-title-error"></div>
-                    </div>
-                    <div class="form-group required">
-                        <label for="report-description">Descrição</label>
-                        <textarea id="report-description" placeholder="Descreva o conteúdo do relatório"></textarea>
-                        <div class="error-message" id="report-description-error"></div>
-                    </div>
-                    <div class="form-group required">
-                        <label>Arquivo do Relatório</label>
-                        <div class="file-upload" onclick="document.getElementById('report-file').click()">
-                            <svg class="icon" viewBox="0 0 24 24" style="width: 48px; height: 48px; margin-bottom: 10px;">
-                                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
-                            </svg>
-                            <p>Clique para selecionar o arquivo ou arraste aqui</p>
-                            <small>PDF, DOC, XLS aceitos (máximo 10MB)</small>
-                            <input type="file" id="report-file" accept=".pdf,.doc,.docx,.xls,.xlsx">
-                        </div>
-                        <div class="error-message" id="report-file-error"></div>
-                    </div>
-                    <button type="submit" class="upload-btn">
-                        <svg class="icon" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
-                            <path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z"/>
+                <div class="form-group required">
+                    <label for="report-description">Descrição</label>
+                    <textarea id="report-description" placeholder="Descreva o conteúdo do relatório"></textarea>
+                    <div class="error-message" id="report-description-error"></div>
+                </div>
+                <div class="form-group required">
+                    <label>Arquivo do Relatório</label>
+                    <div class="file-upload" onclick="document.getElementById('report-file').click()">
+                        <svg class="icon" viewBox="0 0 24 24" style="width: 48px; height: 48px; margin-bottom: 10px;">
+                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
                         </svg>
-                        Adicionar Relatório
-                    </button>
-                </form>
-               
-                <div class="uploaded-items" id="reports-list">
-                    <h3>Relatórios Publicados</h3>
+                        <p>Clique para selecionar o arquivo ou arraste aqui</p>
+                        <small>PDF, DOC, XLS aceitos (máximo 10MB)</small>
+                        <input type="file" id="report-file" accept=".pdf,.doc,.docx,.xls,.xlsx">
+                    </div>
+                    <div class="error-message" id="report-file-error"></div>
                 </div>
+                <button type="submit" class="upload-btn">
+                    <svg class="icon" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                        <path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z"/>
+                    </svg>
+                    Adicionar Relatório
+                </button>
+            </form>
+            
+            <div class="uploaded-items" id="reports-list">
+                <h3>Relatórios Publicados</h3>
             </div>
         </div>
-
-
-
-       
-        </div>
-   
-
-
-
+    </div>
 
     <!-- Modal para visualizar descrição -->
     <div id="descriptionModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
             <div class="modal-header">
+                <span class="close">&times;</span>
                 <h3 id="modal-title"></h3>
             </div>
             <div class="modal-body">
@@ -320,10 +309,6 @@
             </div>
         </div>
     </div>
-       
-    </div>
-    </div>
-
 
      <footer>
    <div class="footer-container">
