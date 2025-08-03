@@ -181,9 +181,6 @@ textarea {
     cursor: pointer;
 }
 
-.gallery-item:hover {
-    transform: translateY(-5px);
-}
 
 /* Estilos para o conteúdo do modal de QR Code */
 #qrCodeContainer img {
@@ -243,10 +240,6 @@ textarea {
         flex-wrap: nowrap;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
         max-width: 1210px;
-    }
-    
-    .gallery-item:hover {
-        transform: translateY(-2px);
     }
     
     .gallery-item img {
@@ -561,7 +554,6 @@ textarea {
   align-items: center;
   right: 20px;
   top: 50%;
-  transform: translateY(-50%);
 }
 
 .profile-dropdown button {
@@ -635,7 +627,6 @@ main {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   z-index: 1100;
   background-color: #FFFFFF;
   width: 90%;

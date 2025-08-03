@@ -19,7 +19,9 @@
     <script src="../JS/dashboard.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-</head>
+    <script type="module" src="https://unpkg.com/@phosphor-icons/webcomponents@2.1/dist/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1/src/regular/style.css" />
+  </head>
 <body>
     <header>
       <nav class="navbar navbar-expand-lg">
@@ -301,19 +303,19 @@
           <div class="stats-grid">
               <div class="stat-card-1">
                   <div class="stat-number" id="stat-cadastros">30</div>
-                  <div class="stat-label">Número de doadores para registro</div>
+                  <div class="stat-label">Número de doadores para Roupas</div>
                   <div class="stat-change">Meta: 150 cadastros</div>
               </div>
               
               <div class="stat-card-2">
                   <div class="stat-number" id="stat-doacoes">90</div>
-                  <div class="stat-label">Número de doações para deferente</div>
+                  <div class="stat-label">Número de doações para Alimentos</div>
                   <div class="stat-change">Meta: 200 doações</div>
               </div>
               
               <div class="stat-card-3" style="border: 2px solid #693d19;">
                   <div class="stat-number" id="stat-pendentes">20</div>
-                  <div class="stat-label">Número de doações para gradução há</div>
+                  <div class="stat-label">Número de doações para Produtos de Higiene</div>
                   <div class="stat-change">Meta: 150 graduações</div>
               </div>
           </div>
@@ -321,19 +323,19 @@
           <div class="stats-grid">
               <div class="stat-card-4">
                   <div class="stat-number" id="stat-triadas">50</div>
-                  <div class="stat-label">Número de doações triadas</div>
+                  <div class="stat-label">Número de doações Móveis</div>
                   <div class="stat-change">Meta: 200 triados</div>
               </div>
               
               <div class="stat-card-5">
                   <div class="stat-number" id="stat-finalizadas">100</div>
-                  <div class="stat-label">Número de doações para a</div>
+                  <div class="stat-label">Número de doações para Livros e brinquedos</div>
                   <div class="stat-change">Meta: 200 finalizadas</div>
               </div>
               
               <div class="stat-card-6">
                   <div class="stat-number" id="stat-tempo">05</div>
-                  <div class="stat-label">Número de doações para a utilizados de qualificações</div>
+                  <div class="stat-label">Número de doações para Roupas de cama e Cobertores</div>
                   <div class="stat-change">Meta: 50 utilizados</div>
               </div>
           </div>
@@ -366,7 +368,8 @@
                   <div class="progress-item">
                       <div class="progress-icon"></div>
                       <div class="progress-info">
-                          <div class="progress-label">Pedidos de coleta e</div>
+                          <div class="progress-label">Por outras Organizações não Governamnetais</div>
+                          <i class="ph-light ph-building-office"></i>
                           <div class="progress-bar">
                               <div class="progress-fill" style="width: 60%;"></div>
                           </div>
@@ -377,7 +380,8 @@
                   <div class="progress-item">
                       <div class="progress-icon"></div>
                       <div class="progress-info">
-                          <div class="progress-label">Pedidos de coleta e</div>
+                          <div class="progress-label">Por Instituições públicas e privadas</div>
+                          <i class="ph-light ph-building"></i>
                           <div class="progress-bar">
                               <div class="progress-fill" style="width: 45%;"></div>
                           </div>
@@ -388,7 +392,8 @@
                   <div class="progress-item">
                       <div class="progress-icon"></div>
                       <div class="progress-info">
-                          <div class="progress-label">Pedidos de coleta e</div>
+                          <div class="progress-label">Por Pessoas</div>
+                          <i class="ph ph-users"></i>
                           <div class="progress-bar">
                               <div class="progress-fill" style="width: 80%;"></div>
                           </div>
@@ -399,7 +404,8 @@
                   <div class="progress-item">
                       <div class="progress-icon"></div>
                       <div class="progress-info">
-                          <div class="progress-label">Pedidos de coleta e</div>
+                          <div class="progress-label">Número de Donatários</div>
+                          <i class="ph-light ph-users-three"></i>
                           <div class="progress-bar">
                               <div class="progress-fill" style="width: 30%;"></div>
                           </div>
@@ -498,8 +504,8 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="btn-secondary{ background-color: transparent;}">Fechar</button>
-            <a href="relatorio-detalhado.html" class="btn btn-primary">Ver Relatório Detalhado</a>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            <a href="./historicodoacoes.html" class="btn btn-primary">Ver Relatório Detalhado</a>
           </div>
         </div>
       </div>
