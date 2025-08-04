@@ -1,62 +1,100 @@
 @import url("https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap");
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-body {
-    font-family: 'Lexend Deca', sans-serif;
-    background-color: #ffffff;
-    line-height: 1.6;
-}
-
-.container {
-    max-width: 1700px;
-    margin: 0 auto;
-    padding: 30px 20px;
-}
-
+       
+       * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         .aaa{
-            text-decoration: none;
+    text-decoration:none;
+}
+
+
+        .validation-info {
+            border: 1px solid #9c9c9c;
+            color: #704010;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
         }
 
 
-        .hero-image {
-            width: 100%;
-            height: 300px;
-            border-radius: 8px;
-            margin-bottom: 40px;
+
+
+        .validation-info h4 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #704010;
+            
         }
 
-            input{
-                outline:none;
-            }
 
 
-        h1 {
+
+        .validation-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+
+
+
+        .validation-info li {
+            margin-bottom: 5px;
+        }
+
+
+ .tite {
+           
             font-family: 'Passion One', cursive;
             font-size: 32px;
-            color: #8B4513;
-           
+            color: #693B11;
+            text-align: center;
             margin-bottom: 40px;
             font-weight: 400;
-        }
-        .corteimg{
-            width: 100%;
-    clip-path: inset(80px 50px 700px 10px); /* cima, direita, baixo, esquerda */
-    margin-top: -70px;
- 
+            margin-top: 10px;
+        
         }
 
-.nav-tabs {
+
+        body {
+            font-family:"Lexend Deca";
+            background-color: #ffffff;
+            padding: 20px;
+        }
+
+
+        .container {
+            max-width: 1700px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+          
+            
+        }
+
+
+        .title {
+            color: #693B11;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+
+        .subtitle {
+            color: #000000;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .nav-tabs {
     display: flex;
     justify-content: center;
     border-bottom: 2px solid #ddd;
     margin-bottom: 40px;
-    margin-top: -20px;
     flex-wrap: wrap;
     gap: 10px;
 }
@@ -129,94 +167,6 @@ body {
     }
 }
 
-        .page {
-            display: none;
-        }
-
-
-        .page.active {
-            display: block;
-        }
-
-
-.page-header {
-    margin-bottom: 30px;
-}
-
-.title {
-    font-family: "Passion One", sans-serif;
-    font-size: 32px;
-    font-weight: 600;
-    color: #693B11;
-    margin-bottom: 8px;
-}
-
-.page-subtitle {
-    font-size: 16px;
-    color: #000000;
-}
-
-.form-section {
-    background: transparent;
-    border-radius: 8px;
-    padding: 24px;
-    margin-bottom: 20px;
-    border: 1px solid #b3b3b3;
-}
-
-#tituloff {
-    font-family: 'Lexend Deca', sans-serif;
-    color: #000000;
-    font-size: 16px;
-}
-
-.card-title {
-    font-size: 16px;
-    font-weight: 400;
-    color: #333;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.form-grid {
-    display: grid;
-    color: white;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 16px;
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 16px;
-}
-
-.form-group label {
-    display: block;
-    font-size: 14px;
-    color: #000000;
-    margin-bottom: 6px;
-    font-weight: 400;
-}
-
-.form-control {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #ddd;
-    outline: none;
-    border-radius: 6px;
-    font-size: 14px;
-    background: white;
-}
-
-.file-upload-info {
-    font-size: 12px;
-    color: #ffffff;
-    margin-top: 4px;
-}
-
-  
 .form-group input:focus, .form-group select:focus {
     outline: none;
     
@@ -225,293 +175,390 @@ body {
 .form-group input::placeholder, .form-group select::placeholder, form-group textarea::placeholder {
     font-size:14px;
 }
-  
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
 
 
-.primeirinho {
-background-color: rgba(226, 204, 174, 1);
-    color: #000000;
-    padding: 8px 15px;
-    border-radius: 10px;
-    border: none;
-    font-weight: 400;
-    font-size: 1rem;
-    cursor: pointer;
-}
+        .stat-card {
+            background: #cfad8a8e;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            color: #A67545;
+        }
 
-.primeirinho:hover {
-    background-color: #caae8d;
+
+        .stat-card.highlight {
+            background: #ebd5b79c;
+            color: #B39060;
+        }
+
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+
+        .form-section {
+           
+            margin-top: 40px;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid #9c9c9c;
+            outline: none;
+        }
+
+
+        .form-title {
+            color: #000000;
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-weight:400;
+           
+        }
+
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            outline: none;
+        }
+
+        
+
+        label {
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #000000;
+            outline:none;
+       
+          
+        }
+
+       
+
+
+
+        input, select, textarea {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+
+        .title{
+            font-family: "Passion One";
+            color:#61350C ;
+            font-size: 32px;
+
+
+        }
+
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+
+        
+
+
+        .btn:hover {
+            background-color: #caae8d;
     color: #3d2106;
-}
+        }
 
-.exclusivo {
-    font-family: "Lexend Deca", sans-serif;
-    font-size: 14px;
-    background-color: transparent;
-    color: #000000;
-    padding: 8px 12px;
-    border-radius: 10px;
-    border: black 1px solid;
-}
 
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 30px;
-}
+        .partnerships-list {
+            margin-top: 30px;
+        }
 
-.card {
-    background: white;
-    border-radius: 12px;
-    padding: 24px;
-    border: 1px solid #a7a5a5;
-}
 
-.card-subtitle {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 20px;
-}
+        .partnership-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
 
-.chart-container {
-    position: relative;
-    height: 200px;
-    margin-bottom: 16px;
-}
 
-.line-chart-container {
-    position: relative;
-    height: 180px;
-}
+        .partnership-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
 
-.budget-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
 
-.budget-table th,
-.budget-table td {
-    padding: 12px 16px;
-    text-align: left;
-    border-bottom: 1px solid #e0e0e0;
-}
+   
 
-.budget-table th {
-    background-color: #e9e9e9;
-    font-weight: 600;
-    color: #333;
-    font-size: 14px;
-}
 
-.budget-table td {
-    font-size: 14px;
-    color: #666;
-}
+        .partnership-name {
+            color: #000000;
+            font-size: 16px;
+        }
 
-.budget-table .category {
-    color: #333;
-    font-weight: 500;
-}
 
-.status-badge {
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 500;
-}
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
 
-.status-executado {
-    background-color: #682c01;
-    color: white;
-}
 
-.status-planejado {
-    background-color: #9e7151;
-    color: #ffffff;
-}
+        .status-active {
+            background: #A67545;
+            color: white;
+        }
 
-.status-pendente {
-    background-color: transparent;
-    color: #000000;
-    border: #000000 1px solid;
-}
 
-.actions-cell {
-    text-align: center;
-}
+        .status-renewal {
+            background: #3d2106;
+            color: white;
+        }
 
-.bbb {
-    margin-top: -40px;
-}
 
-.editinho{
-    font-size: 14px;
+        .partnership-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .detail-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 2px;
+        }
+
+
+        .detail-value {
+           
+            color: #2c3e50;
+        }
+
+
+        .type-badge {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+
+        .type-public {
+            background: #61350C;
+            color: white;
+        }
+
+
+        .type-ong {
+            background: #8d5e32;
+            color: #ffffff;
+        }
+
+
+        .type-private {
+            background: #ffffff;
+            border: 1px solid #000000;
+            color: #000000;
+        }
+
+
+        .section-header {
+            color: rgb(0, 0, 0);
+            padding: 15px 20px;
+            margin: 30px -30px 20px -30px;
+            font-size: 16px;
+        }
+
+
+        .empty-state {
+            text-align: center;
+            color: #666;
+            padding: 40px;
+            font-style: italic;
+        }
+
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+
+        .edit {
+    font-family: 'Lexend Deca', sans-serif;
     background-color: rgba(226, 204, 174, 1);
     color: #000000;
+    /* margin-top: 20px; ← REMOVER ESTA LINHA */
     padding: 8px 15px;
     border-radius: 10px;
     border: none;
+    font-size: 14px;
+    cursor: pointer;
+    box-sizing: border-box; /* ← ADICIONAR */
 }
 
-.editinho:hover {
-    background-color: #caae8d;
+.delet {
+    font-family: 'Lexend Deca', sans-serif;
+    background-color: rgb(255, 255, 255);
+    color: #000000;
+    padding: 8px 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid #000000;
+    box-sizing: border-box; /* ← ADICIONAR */
+}
+
+.um{
+    font-family: 'Lexend Deca', sans-serif;
+        background-color: rgba(226, 204, 174, 1);
+         color: #000000;
+         margin-top: 20px;
+        
+    padding: 8px 15px;
+    border-radius: 10px;
+    border: none;
+    
+    font-size: 14px;
+    cursor: pointer;
+}
+.um:hover {
+            background-color: #caae8d;
     color: #3d2106;
-}
+        }
 
-.no-data {
-    text-align: center;
-    color: #999;
-    font-style: italic;
-}
+        .edit:hover {
+             background-color: #caae8d;
+    color: #3d2106;
+        }
 
-/* Media Queries para Responsividade */
-@media (max-width: 768px) {
-    .container {
-        padding: 20px 15px;
-    }
-    
-    .title {
-        font-size: 24px;
-    }
-    
-    .page-subtitle {
-        font-size: 14px;
-    }
-    
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-    }
-    
-    .form-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-    
-    .card {
-        padding: 16px;
-    }
-    
-    .card-title {
-        font-size: 16px;
-    }
-    
-    .chart-container {
-        height: 180px;
-    }
-    
-    .line-chart-container {
-        height: 160px;
-    }
-    
-    .budget-table {
-        font-size: 12px;
-    }
-    
-    .budget-table th,
-    .budget-table td {
-        padding: 8px 6px;
-    }
-    
-    .primeirinho {
-        padding: 8px 12px;
-        font-size: 12px;
-    }
-    
-    .editinho,
-    .exclusivo {
-        padding: 4px 8px;
-        font-size: 11px;
-        margin: 2px;
-    }
-    
-    .actions-cell {
-        min-width: 100px;
-    }
-    
-    .form-section {
-        padding: 16px;
-    }
-}
-@media(max-width: 1400px) {
-    .container {
-    max-width: 1500px;
-    margin: 0 auto;
-    padding: 30px 20px;
-}
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
 
-}
-@media (max-width: 480px) {
-    .container {
-        padding: 15px 10px;
-    }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+
+        .modal-title {
+            color: #2c3e50;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+
+        .close:hover {
+            color: #000;
+        }
+
+
+        .save {
+            font-family: 'Lexend Deca', sans-serif;
+        background-color: rgba(226, 204, 174, 1);
+         color: #000000;
+         margin-top: 20px;
+        
+    padding: 8px 15px;
+    border-radius: 10px;
+    border: none;
     
-    .title {
-        font-size: 20px;
-    }
+    font-size: 14px;
+    cursor: pointer;
+             
+        }
+
+
+        .save:hover {
+            background-color: #caae8d;
+    color: #3d2106;
+        }
+
+
+        .cancel {
+              font-family: 'Lexend Deca', sans-serif;
+        background-color: rgba(226, 204, 174, 1);
+         color: #000000;
+         margin-top: 20px;
+        
+    padding: 8px 15px;
+    border-radius: 10px;
+    border: none;
     
-    .card {
-        padding: 12px;
-    }
-    
-    .chart-container {
-        height: 150px;
-    }
-    
-    .line-chart-container {
-        height: 140px;
-    }
-    
-    .budget-table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-    
-    .budget-table thead {
-        display: none;
-    }
-    
-    .budget-table tbody,
-    .budget-table tr,
-    .budget-table td {
-        display: block;
-    }
-    
-    .budget-table tr {
-        border: 1px solid #e0e0e0;
-        margin-bottom: 10px;
-        border-radius: 8px;
-        padding: 12px;
-        background: #f9f9f9;
-    }
-    
-    .budget-table td {
-        border: none;
-        padding: 4px 0;
-        position: relative;
-        padding-left: 120px;
-    }
-    
-    .budget-table td:before {
-        content: attr(data-label);
-        position: absolute;
-        left: 0;
-        width: 110px;
-        font-weight: 600;
-        color: #333;
-    }
-    
-    .actions-cell {
-        text-align: left;
-        padding-left: 0 !important;
-    }
-    
-    .btn-edit,
-    .btn-danger {
-        display: inline-block;
-        margin: 4px 8px 4px 0;
-    }
-}
+    font-size: 14px;
+    cursor: pointer;
+        }
+
+
+        .cancel:hover {
+            background-color: #caae8d;
+    color: #3d2106;
+        }
