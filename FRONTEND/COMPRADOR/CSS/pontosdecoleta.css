@@ -23,13 +23,10 @@ body {
 .h1 {
     text-align: center;
     color: #693B11;
-<<<<<<< Updated upstream
     margin-top: 4rem;
     font-family: 'Passion One', sans-serif;
-=======
     padding-top: 4rem;
     font-family: Passion One, sans-serif;
->>>>>>> Stashed changes
     font-size: clamp(24px, 5vw, 32px);
     margin-bottom: 20px;
 }

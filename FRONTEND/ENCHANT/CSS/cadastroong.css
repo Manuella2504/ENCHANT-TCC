@@ -8,7 +8,7 @@
 }
 
 body {
-  background-color: #F5F5F5;
+ background-color: #F5F5F5;
 }
 
 #fixado {
@@ -208,7 +208,7 @@ p span {
     box-shadow: 0 0 5px rgba(105, 59, 17, 0.3);
 }
 
-/* Adicionando estados de validação */
+/* Adicionando estados de validaÃ§Ã£o */
 .campo input.valido {
     border-color: #28a745;
     background-color: rgba(40, 167, 69, 0.05);
@@ -269,7 +269,7 @@ p span {
 }
 
 .requisitos-senha .requisito::before {
-  content: "•";
+  content: "â€¢";
   color: #dc3545;
   position: absolute;
   left: 0;
@@ -281,7 +281,7 @@ p span {
 }
 
 .requisitos-senha .requisito.valido::before {
-  content: "✓";
+  content: "âœ“";
   color: #28a745;
 }
 
@@ -618,7 +618,7 @@ footer-left img {
     margin-bottom: 5px;
   }
 
-  /* Responsividade para os novos contêineres */
+  /* Responsividade para os novos contÃªineres */
   .container-flex {
     flex-direction: column;
   }
@@ -673,7 +673,7 @@ footer-left img {
     font-size: 14px;
   }
   
-  /* Responsividade para os novos contêineres */
+  /* Responsividade para os novos contÃªineres */
   .container-flex {
     flex-direction: column;
   }
