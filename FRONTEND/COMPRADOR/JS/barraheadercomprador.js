@@ -84,9 +84,22 @@ document.addEventListener("DOMContentLoaded", function () {
     
     const toggleButton = document.getElementById('icone');
     if (toggleButton) {
-      toggleButton.addEventListener('click', function() {
-      
-        if (window.bootstrap && navbarCollapse) {
+      toggleButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const windowWidth = window.innerWidth;
+        console.log('Window width:', windowWidth); // Debug
+        
+        // Para a faixa problemática 990-1023px, usar sempre controle manual
+        if (windowWidth >= 990 && windowWidth <= 1024) {
+          console.log('Using manual control for 990-1024px range'); // Debug
+          handleCollapseManually(navbarCollapse, toggleButton);
+          return;
+        }
+        
+        // Para outras resoluções, usar a lógica padrão
+        if (window.bootstrap && navbarCollapse && windowWidth < 990) {
           const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
           if (bsCollapse) {
             if (navbarCollapse.classList.contains('show')) {
@@ -95,33 +108,141 @@ document.addEventListener("DOMContentLoaded", function () {
               bsCollapse.show();
             }
           } else {
-          
             navbarCollapse.classList.toggle('show');
+            updateToggleButton(toggleButton, navbarCollapse.classList.contains('show'));
           }
         }
-       
-        else if ($) {
+        else if ($ && navbarCollapse && windowWidth < 990) {
           $(navbarCollapse).collapse('toggle');
         }
-      
         else if (navbarCollapse) {
-          if (navbarCollapse.classList.contains('show')) {
-            navbarCollapse.classList.remove('show');
-            toggleButton.setAttribute('aria-expanded', 'false');
-          } else {
-            navbarCollapse.classList.add('show');
-            toggleButton.setAttribute('aria-expanded', 'true');
-          }
+          handleCollapseManually(navbarCollapse, toggleButton);
         }
       });
     }
   
+    // Adicionar listener para resize para lidar com mudanças de breakpoint
+    window.addEventListener('resize', function() {
+      handleResizeCollapse();
+    });
+    
+    // Adicionar um debounce para o resize
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(function() {
+        handleResizeCollapse();
+      }, 100);
+    });
   
    
     handleHeaderAnimation();
     handleSidebarHover();
   });
   
+  // Função para lidar com o collapse manualmente
+  function handleCollapseManually(navbarCollapse, toggleButton) {
+    const isOpen = navbarCollapse.classList.contains('show');
+    const windowWidth = window.innerWidth;
+    
+    console.log('Manual collapse - isOpen:', isOpen, 'width:', windowWidth); // Debug
+    
+    if (isOpen) {
+      navbarCollapse.classList.remove('show');
+      // Para a faixa 990-1024px, forçar display none para sobrescrever CSS
+      if (windowWidth >= 990 && windowWidth <= 1024) {
+        navbarCollapse.style.display = 'none !important';
+      } else {
+        navbarCollapse.style.display = 'none';
+      }
+      updateToggleButton(toggleButton, false);
+    } else {
+      navbarCollapse.classList.add('show');
+      // Para a faixa 990-1024px, forçar display block
+      if (windowWidth >= 990 && windowWidth <= 1024) {
+        navbarCollapse.style.display = 'block !important';
+        navbarCollapse.style.position = 'absolute';
+        navbarCollapse.style.top = '100%';
+        navbarCollapse.style.left = '0';
+        navbarCollapse.style.right = '0';
+        navbarCollapse.style.zIndex = '1050';
+      } else {
+        navbarCollapse.style.display = 'block';
+      }
+      updateToggleButton(toggleButton, true);
+    }
+  }
+  
+  // Função para atualizar o estado do botão toggle
+  function updateToggleButton(toggleButton, isOpen) {
+    if (isOpen) {
+      toggleButton.setAttribute('aria-expanded', 'true');
+      toggleButton.classList.remove('collapsed');
+    } else {
+      toggleButton.setAttribute('aria-expanded', 'false');
+      toggleButton.classList.add('collapsed');
+    }
+  }
+  
+  // Função para lidar com resize e resetar o collapse se necessário
+  function handleResizeCollapse() {
+    const navbarCollapse = document.getElementById('navbarNav');
+    const toggleButton = document.getElementById('icone');
+    const windowWidth = window.innerWidth;
+    
+    console.log('Resize event - width:', windowWidth); // Debug
+    
+    if (navbarCollapse && toggleButton) {
+      // Resetar estado do menu ao mudar de breakpoint
+      const wasOpen = navbarCollapse.classList.contains('show');
+      
+      // Se sair da faixa problemática para desktop (>1024px), fechar o menu e limpar estilos
+      if (windowWidth > 1024 && wasOpen) {
+        navbarCollapse.classList.remove('show');
+        navbarCollapse.style.display = '';
+        navbarCollapse.style.position = '';
+        navbarCollapse.style.top = '';
+        navbarCollapse.style.left = '';
+        navbarCollapse.style.right = '';
+        navbarCollapse.style.zIndex = '';
+        updateToggleButton(toggleButton, false);
+      }
+      
+      // Para a faixa problemática, garantir que não há interferência do Bootstrap
+      if (windowWidth >= 990 && windowWidth <= 1024) {
+        // Remover qualquer instância do Bootstrap collapse
+        if (window.bootstrap) {
+          const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+          if (bsCollapse) {
+            bsCollapse.dispose();
+          }
+        }
+        
+        // Forçar reset do estado se estava aberto
+        if (wasOpen) {
+          navbarCollapse.classList.remove('show');
+          navbarCollapse.style.display = 'none !important';
+          updateToggleButton(toggleButton, false);
+        }
+        
+        // Adicionar classe especial para esta faixa
+        navbarCollapse.classList.add('collapse-manual-control');
+      }
+      // Para outras faixas, recriar a instância do Bootstrap se necessário
+      else {
+        navbarCollapse.classList.remove('collapse-manual-control');
+        
+        if (window.bootstrap && windowWidth <= 989) {
+          const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+          if (!bsCollapse) {
+            new bootstrap.Collapse(navbarCollapse, {
+              toggle: false
+            });
+          }
+        }
+      }
+    }
+  }
   
   function setupProfileDropdown() {
     const usuarioBtn = document.getElementById("usuario");
@@ -129,8 +250,8 @@ document.addEventListener("DOMContentLoaded", function () {
    
     if (!usuarioBtn || !dropdownMenu) return;
    
- 
-    const isMobile = window.innerWidth <= 768;
+    // Ajuste para considerar o range problemático
+    const isMobile = window.innerWidth <= 1023; // Expandido para incluir o range problemático
    
     if (isMobile) {
   
@@ -191,6 +312,7 @@ document.addEventListener("DOMContentLoaded", function () {
     handleHeaderAnimation();
     handleSidebarHover();
     ensureSidebarHeight();
+    handleResizeCollapse(); // Adicionar a nova função
   });
   
 
@@ -264,9 +386,9 @@ document.addEventListener("DOMContentLoaded", function () {
   function handleHeaderAnimation() {
     const header = document.getElementById("header");
   
-  
     if (header) {
-      if (window.innerWidth <= 768) {
+      // Ajustar para incluir o range problemático
+      if (window.innerWidth <= 1023) {
         header.style.transition = "none";
       } else {
         header.style.transition = "all 0.3s ease-in-out";
@@ -295,10 +417,10 @@ document.addEventListener("DOMContentLoaded", function () {
       }
      
 
-      const isTablet = window.innerWidth > 768 && window.innerWidth <= 992;
+      const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
      
 
-      if (!isTablet && window.innerWidth > 768) {
+      if (!isTablet && window.innerWidth > 1024) {
         const mouseenterListener = function() {
           body.classList.add("sidebar-expanded");
 
@@ -499,6 +621,9 @@ document.addEventListener("DOMContentLoaded", function() {
             if (userIcon) {
               userIcon.style.display = "none";
             }
+            
+            // Salvar no localStorage para persistência - REMOVIDO localStorage
+            // localStorage.setItem('userProfilePhoto', e.target.result);
           }
         };
         
@@ -591,6 +716,45 @@ document.addEventListener("DOMContentLoaded", function() {
     .image-preview {
       border-radius: 5px;
     }
+    
+    /* Fix específico para a faixa 990-1024px */
+    @media (min-width: 990px) and (max-width: 1024px) {
+      .navbar-collapse.collapse-manual-control {
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 1050 !important;
+        background-color: #ffffff !important;
+        box-shadow: #b4b4b4 1px 0 3px 0px !important;
+        border-radius: 15px !important;
+        margin-top: 0.4rem !important;
+        padding: 15px !important;
+        width: 100% !important;
+      }
+      
+      .navbar-collapse.collapse-manual-control.show {
+        display: block !important;
+      }
+      
+      .navbar-collapse.collapse-manual-control:not(.show) {
+        display: none !important;
+      }
+      
+      /* Forçar que o botão toggle funcione nesta faixa */
+      .navbar-toggler {
+        display: block !important;
+      }
+      
+      /* Garantir que o navbar nav se comporte corretamente */
+      .navbar-collapse.collapse-manual-control .navbar-nav {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 5px !important;
+        padding-left: 10px !important;
+        margin-top: 10px !important;
+      }
+    }
   `;
   document.head.appendChild(style);
 
@@ -616,8 +780,8 @@ document.addEventListener("DOMContentLoaded", function() {
           const reader = new FileReader();
           
           reader.onload = function(e) {
-
-            localStorage.setItem(storageKey, e.target.result);
+            // REMOVIDO localStorage - use variáveis em memória ou outro sistema de persistência
+            // localStorage.setItem(storageKey, e.target.result);
           };
           
           reader.readAsDataURL(this.files[0]);
@@ -628,16 +792,16 @@ document.addEventListener("DOMContentLoaded", function() {
   
 
   function loadSavedImages() {
-
-    const headerLogo = localStorage.getItem('headerLogo');
-    if (headerLogo) {
-      createImagePreview('imgheader', headerLogo, 'btnn');
-    }
+    // REMOVIDO localStorage - implementar sistema alternativo de persistência
+    // const headerLogo = localStorage.getItem('headerLogo');
+    // if (headerLogo) {
+    //   createImagePreview('imgheader', headerLogo, 'btnn');
+    // }
     
-    const footerLogo = localStorage.getItem('footerLogo');
-    if (footerLogo) {
-      createImagePreview('imgfooter', footerLogo, 'btnn2');
-    }
+    // const footerLogo = localStorage.getItem('footerLogo');
+    // if (footerLogo) {
+    //   createImagePreview('imgfooter', footerLogo, 'btnn2');
+    // }
   }
   
 
@@ -691,12 +855,12 @@ document.addEventListener("DOMContentLoaded", function() {
         e.stopPropagation();
         container.removeChild(previewElement);
         
-
-        if (containerId === 'imgheader') {
-          localStorage.removeItem('headerLogo');
-        } else if (containerId === 'imgfooter') {
-          localStorage.removeItem('footerLogo');
-        }
+        // REMOVIDO localStorage
+        // if (containerId === 'imgheader') {
+        //   localStorage.removeItem('headerLogo');
+        // } else if (containerId === 'imgfooter') {
+        //   localStorage.removeItem('footerLogo');
+        // }
         
         buttonIcon.style.display = "inline-block";
       });
@@ -705,48 +869,3 @@ document.addEventListener("DOMContentLoaded", function() {
       container.appendChild(previewElement);
     }
   }
-
-userPhotoInput.addEventListener("change", function() {
-    if (this.files && this.files[0]) {
-      const reader = new FileReader();
-      
-      reader.onload = function(e) {
-        const userPhoto = document.getElementById("userPhoto");
-        if (userPhoto) {
-          userPhoto.src = e.target.result;
-          userPhoto.style.display = "inline-block";
-          
-          // Esconder o ícone padrão
-          const userIcon = document.getElementById("userIcon");
-          if (userIcon) {
-            userIcon.style.display = "none";
-          }
-          
-          // Salvar no localStorage para persistência
-          localStorage.setItem('userProfilePhoto', e.target.result);
-        }
-      };
-      
-      reader.readAsDataURL(this.files[0]);
-    }
-  });
-  
-  function loadSavedImages() {
-    
-    // Carregar foto de perfil
-    const savedProfilePhoto = localStorage.getItem('userProfilePhoto');
-    if (savedProfilePhoto) {
-      const userPhoto = document.getElementById("userPhoto");
-      const userIcon = document.getElementById("userIcon");
-      
-      if (userPhoto) {
-        userPhoto.src = savedProfilePhoto;
-        userPhoto.style.display = "inline-block";
-        
-        if (userIcon) {
-          userIcon.style.display = "none";
-        }
-      }
-    }
-  }
-  
