@@ -296,7 +296,8 @@ h1 {
 }
 
 #btnn {
-    margin-left: 25px;
+    margin-left: -15px;
+    margin-top: -20px;
 }
 
 #btnn2 {
