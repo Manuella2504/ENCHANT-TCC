@@ -1,19 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Função para controlar o dropdown do perfil
+
     setupProfileDropdown();
    
-    // Configurar evento para detectar o fechamento do menu colapsável
+
     const navbarCollapse = document.getElementById('navbarNav');
    
-    // Se estivermos usando Bootstrap 5
+
     if (window.bootstrap && navbarCollapse) {
       const collapseInstance = new bootstrap.Collapse(navbarCollapse, {
-        toggle: false // Não alternar ao criar a instância
+        toggle: false 
       });
      
-      // Adicionar listener para quando o colapso for escondido
       navbarCollapse.addEventListener('hidden.bs.collapse', function () {
-        // Garantir que o botão possa ser clicado novamente
+
         const toggleButton = document.getElementById('icone');
         if (toggleButton) {
           toggleButton.classList.remove('collapsed');
@@ -21,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     }
-    // Para Bootstrap 4 (que parece estar sendo usado no seu código)
+
     else if ($ && navbarCollapse) {
       $(navbarCollapse).on('hidden.bs.collapse', function () {
         const toggleButton = document.getElementById('icone');
@@ -31,14 +30,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     }
-   
-  
-  
-    // Adicionar evento de clique manual ao botão de três pontos
+
     const toggleButton = document.getElementById('icone');
     if (toggleButton) {
       toggleButton.addEventListener('click', function() {
-        // Se Bootstrap 5
+
         if (window.bootstrap && navbarCollapse) {
           const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
           if (bsCollapse) {
@@ -48,15 +44,12 @@ document.addEventListener("DOMContentLoaded", function () {
               bsCollapse.show();
             }
           } else {
-            // Alternar manualmente se não houver instância
             navbarCollapse.classList.toggle('show');
           }
         }
-        // Para Bootstrap 4
         else if ($) {
           $(navbarCollapse).collapse('toggle');
         }
-        // Alternar manualmente como fallback
         else if (navbarCollapse) {
           if (navbarCollapse.classList.contains('show')) {
             navbarCollapse.classList.remove('show');
@@ -69,28 +62,26 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   
-  
-    // Chamadas para outras funções existentes
+
     handleHeaderAnimation();
     handleSidebarHover();
   });
   
   
-  // Nova função para configurar o dropdown do perfil
   function setupProfileDropdown() {
     const usuarioBtn = document.getElementById("usuario");
     const dropdownMenu = document.getElementById("dropzinho");
    
     if (!usuarioBtn || !dropdownMenu) return;
    
-    // Verifica se estamos em dispositivo móvel
+   
     const isMobile = window.innerWidth <= 768;
    
     if (isMobile) {
-      // No mobile, o dropdown aparece com clique
+   
       usuarioBtn.addEventListener("click", function(e) {
         e.preventDefault();
-        e.stopPropagation(); // Impede propagação do evento
+        e.stopPropagation(); 
         if (dropdownMenu.style.display === "block") {
           dropdownMenu.style.display = "none";
         } else {
@@ -98,19 +89,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
      
-      // Fecha ao clicar fora
       document.addEventListener("click", function(e) {
         if (!usuarioBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
           dropdownMenu.style.display = "none";
         }
       });
     } else {
-      // Em desktop, mostra ao passar o mouse
+
       usuarioBtn.addEventListener("mouseenter", function() {
         dropdownMenu.style.display = "block";
       });
      
-      // Container do dropdown para evitar que feche quando mover para os itens
       const profileDropdown = document.querySelector(".profile-dropdown");
       if (profileDropdown) {
         profileDropdown.addEventListener("mouseleave", function() {
@@ -118,10 +107,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       }
      
-      // Também adicionar clique para melhorar acessibilidade
       usuarioBtn.addEventListener("click", function(e) {
         e.preventDefault();
-        e.stopPropagation(); // Impede propagação do evento
+        e.stopPropagation();
         if (dropdownMenu.style.display === "block") {
           dropdownMenu.style.display = "none";
         } else {
@@ -130,7 +118,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
    
-    // Adicionar evento de clique nos itens do dropdown para fechar após clicar
     const dropdownItems = dropdownMenu.querySelectorAll('.dropdown-item');
     dropdownItems.forEach(item => {
       item.addEventListener('click', function() {
@@ -139,8 +126,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
   
-  
-  // Re-configurar em caso de redimensionamento da janela
   window.addEventListener("resize", function() {
     setupProfileDropdown();
     handleHeaderAnimation();
@@ -149,15 +134,12 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   
   
-  // Funções existentes...
   function toggleSidebar() {
     const sidebar = document.getElementById("sidebar");
     const body = document.body;
   
-  
     sidebar.classList.toggle("open");
-    body.classList.toggle("sidebar-open"); // Adiciona classe ao body para controlar overflow
-  
+    body.classList.toggle("sidebar-open"); 
   
     let overlay = document.getElementById("sidebar-overlay");
     if (!overlay) {
@@ -216,7 +198,6 @@ document.addEventListener("DOMContentLoaded", function () {
     return modalOverlay;
   }
   
-  
   function handleHeaderAnimation() {
     const header = document.getElementById("header");
   
@@ -229,7 +210,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   }
-  
   
   function handleSidebarHover() {
     const sidebar = document.getElementById("sidebar");

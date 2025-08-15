@@ -1,9 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap");
 
-
-
-
 body {
   display: flex;
   flex-direction: column;
@@ -13,54 +10,33 @@ body {
   padding: 0;
 }
 
-
-
-
 /* Classe para quando a sidebar estiver expandida */
 .sidebar-expanded .container-fluid {
   padding-left: 180px; /* Ajuste conforme a largura da sua sidebar expandida */
 }
-
-
-
 
 /* Garantir que apenas os itens do navbar se movam, não o perfil */
 .sidebar-expanded .navbar-nav {
   margin-left: 170px; /* Ajuste conforme necessário */
 }
 
-
-
-
 /* Botão de upload e outros elementos à esquerda */
 #imgheader {
   transition: margin-left 0.3s ease;
 }
 
-
-
-
 .sidebar-expanded #imgheader {
   margin-left: 20px; /* Ajuste conforme necessário */
 }
-
-
-
 
 .header.animated {
   animation: slideIn 0.5s ease-in-out;
 }
 
-
-
-
 .container-fluid {
   position: relative;
   transition: padding-left 0.3s ease;
 }
-
-
-
 
 .page-content {
   display: flex;
@@ -71,9 +47,6 @@ body {
   position: relative;
 }
 
-
-
-
 .navbar {
   background-color: #ffffff;
   padding-left: 3rem;
@@ -81,13 +54,6 @@ body {
   height: 56px;
   box-shadow: #b4b4b4 1px 0 3px 0px;
 }
-
-
-
-
-
-
-
 
 .navbar-nav {
   display: flex;
@@ -101,17 +67,11 @@ body {
   font-size: 14px;
 }
 
-
-
-
 .container-fluid {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
-
-
 
 .profile-dropdown {
   position: absolute;
@@ -121,9 +81,6 @@ body {
   top: 50%;
   transform: translateY(-50%);
 }
-
-
-
 
 .profile-dropdown button {
   display: flex;
@@ -135,9 +92,6 @@ body {
   color: black;
 }
 
-
-
-
 .dropdown-item {
   display: flex;
   align-items: center;
@@ -147,24 +101,15 @@ body {
   transition: background-color 0.2s;
 }
 
-
-
-
 .dropdown-item:hover {
   background-color: #e0e0e0;
   border-radius: 6px;
 }
 
-
-
-
 .dropdown-item i {
   margin-right: 10px;
   font-size: 16px;
 }
-
-
-
 
 .profile-dropdown img {
   width: 40px;
@@ -173,9 +118,6 @@ body {
   object-fit: cover;
   border: 2px solid #CCC;
 }
-
-
-
 
 .dropdown-menu {
   position: absolute;
@@ -187,15 +129,9 @@ body {
   padding: 10px;
 }
 
-
-
-
 .profile-dropdown:hover .dropdown-menu {
   display: block;
 }
-
-
-
 
 #imgheader {
   background-color: #D3D3D3;
@@ -207,15 +143,9 @@ body {
   height: 38px;
 }
 
-
-
-
 .upload-btn input {
   display: none;
 }
-
-
-
 
 .profile-dropdown img {
   width: 40px;
@@ -226,17 +156,11 @@ body {
   display: none;
 }
 
-
-
-
 #userIcon {
   font-size: 40px;
   color: #CCC;
   display: inline;
 }
-
-
-
 
 .sidebar {
   position: fixed;
@@ -252,9 +176,6 @@ body {
   border-radius: 6px;
 }
 
-
-
-
 .sidebar-overlay {
   display: none;
   position: fixed;
@@ -266,15 +187,9 @@ body {
   z-index: 650;
 }
 
-
-
-
 .sidebar:hover {
   width: 230px;
 }
-
-
-
 
 .sidebar nav a {
   display: flex;
@@ -285,30 +200,18 @@ body {
   white-space: nowrap;
 }
 
-
-
-
 .sidebar nav a i {
   font-size: 1.2rem;
   margin-right: 20px;
 }
 
-
-
-
 .sidebar nav a span {
   display: none;
 }
 
-
-
-
 .sidebar:hover nav a span {
   display: inline;
 }
-
-
-
 
 header {
   position: fixed;
@@ -318,9 +221,6 @@ header {
   z-index: 200;
 }
 
-
-
-
 main {
   flex: 1;
   min-height: 200px;
@@ -328,21 +228,12 @@ main {
   transition: margin-left 0.3s ease;
 }
 
-
-#btnn {
-  width: 7.5rem;
-  display: inline-block;
-}
-
-
-
 #btnn2 {
   width: 180px;
   padding: 10px;
   display: inline-block;
   align-items: center;
 }
-
 
 i {
   font-size: 23px;
@@ -361,27 +252,15 @@ i {
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-
-
-
 .bi-person {
   font-size: 1.1rem;
 }
-
-
-
 
 .bi-box-arrow-right {
   font-size: 1.1rem;
 }
 
-
-
-
 @media (max-width: 1023px) {
-
-
-
 
   .sidebar-expanded #imgheader {
     margin-left: 0 !important;
@@ -401,14 +280,9 @@ i {
     padding-left: 0 !important;
   }
 
-
-
-
   #navbarNav {
     background-color: #ffffff;
-   
     box-shadow: #b4b4b4 1px 0 3px 0px;
-   
     border-radius: 15px;
     margin-top: 0.4rem;
     padding: 15px;
@@ -466,9 +340,6 @@ i {
     margin-top: 60px;
   }
 
-
-
-
   .profile-dropdown:hover #dropzinho,
   .profile-dropdown:focus-within #dropzinho {
     display: block;
@@ -478,31 +349,18 @@ i {
     padding: 8px 10px;
   }
 
-
-
-
     .perfill{
         display: flex;
         flex-direction: column;
     }
 
-
-
-
     .header {
     animation: none;
   }
 
-
-
-
 .navbar-collapse {
   transition: 0;
 }
-
-
-
-
  
   .sidebar-expanded .container-fluid,
   .sidebar-expanded .navbar-nav,
@@ -511,70 +369,39 @@ i {
     padding-left: 0;
   }
 
-
-
-
   .bi-list {
     display: none;
   }
-
-
-
 
   .sidebar nav a span {
     display: inline;
   }
 
-
-
-
   .navbar-nav {
     gap: 0;
   }
 
-
-
-
   .page-content {
     margin-left: 0;
   }
-
-
-
 
   #usuario {
     font-size: 14px;
     text-decoration: none;
   }
 
-
-
-
   #usuario:hover {
     color: black;
   }
-
-
-
-
-
-
-
 
   #icone {
     border: none;
   }
 
-
-
-
   #icone2 {
     border: none;
     outline: none !important;
   }
-
-
-
 
   #icone:focus,
   #icone2:focus {
@@ -582,17 +409,11 @@ i {
     box-shadow: none;
   }
 
-
-
-
   #imgheader {
     display: block;
     margin: 0 auto;
     width: 130px;
   }
-
-
-
 
   .sidebar {
     top: 0;
@@ -602,17 +423,11 @@ i {
     height: 100vh;
   }
 
-
-
-
   .sidebar.open {
     left: 0;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
     height: 100vh;
   }
-
-
-
 
   .navbar {
     background-color: #ffffff;
@@ -622,20 +437,9 @@ i {
     height: 50px;
   }
 
-
-
-
   span {
     font-size: 14px;
   }
-
-
-
-
-
- 
-
-
 
   .dropdown-menu {
     position: absolute;
@@ -654,11 +458,7 @@ i {
 }
 
 
-
 @media (max-width: 768px){
-
-
-
 
   .sidebar{
     height: 100% !important;
@@ -670,39 +470,32 @@ i {
     z-index: 700;
   }
 
-
-
-
   #btnn2 {
     width: 190px;
     padding: 10px;
     display: inline-block;
     align-items: center;
   }
-
-
-
 }
 
-
-
 @media (min-width:1024px) and (max-width:1400px){
-
 
 .navbar{
 height: 42px;
 }
+
 .sidebar{
-
-
 width: 48px;
 }
+
 #bb{
 font-size: 16px;
 }
+
 .footer-left{
   margin-left: 30px;
 }
+
 .bi-person-circle{
   font-size: 15px;
   color: #ccc;
