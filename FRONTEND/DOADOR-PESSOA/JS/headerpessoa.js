@@ -330,8 +330,8 @@
                                         <span>Nome do Usuário</span>
                                     </button>
                                     <div id="dropzinho" class="dropdown-menu">
-                                        <a class="dropdown-item" href="perfildonatario.html"><i class="bi bi-person"></i> Perfil</a>
-                                        <a class="dropdown-item" href="inicio1.html"><i class="bi bi-box-arrow-right"></i> Sair</a>
+                                        <a class="dropdown-item" href="perfilpessoa.html"><i class="bi bi-person"></i> Perfil</a>
+                                        <a class="dropdown-item" href="compradorantes.html"><i class="bi bi-box-arrow-right"></i> Sair</a>
                                     </div>
                                 </li>
                             </ul>
