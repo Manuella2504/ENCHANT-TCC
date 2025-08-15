@@ -1205,6 +1205,8 @@ h1 {
 }
 
 
+
+
 @media screen and (max-width: 320px) {
     .container {
         margin-left: 10px;
@@ -1219,5 +1221,13 @@ h1 {
 
     .upload-section {
         padding: 12px;
+    }
+}
+
+
+@media (min-width: 1025px) {
+    #btnn {
+    margin-left: 30px;
+    margin-top: 0px;
     }
 }
