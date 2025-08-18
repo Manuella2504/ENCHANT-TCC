@@ -12,7 +12,7 @@ body {
     padding: 0 150px;
   }
   
-  h1 {
+  .titulo {
     font-family: 'Passion One', cursive;
     font-size: 2rem;
     text-align: center;
@@ -26,6 +26,7 @@ body {
     margin-bottom: 30px;
     color: #000000;
   }
+  
   
   .accordion-section {
     background: linear-gradient(to left, #f3e4d7 0%, #ffffff 100%);
