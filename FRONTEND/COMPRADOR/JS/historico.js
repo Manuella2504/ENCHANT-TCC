@@ -325,14 +325,14 @@
             generatePDF(reportData.id);
 
             notification.show(
-                `📊 Relatório ${reportType} gerado!<br>
+                ` Relatório ${reportType} gerado!<br>
                 <strong>${reportCategory}</strong> - ${filteredData.length} registros<br>
                 Período: ${reportData.periodo}`, 
                 'success', 
                 5000
             );
 
-            console.log('📊 Relatório gerado:', reportData);
+            console.log(' Relatório gerado:', reportData);
         }
 
         // Função para filtrar doações
@@ -628,25 +628,25 @@ Data de geração: ${new Date().toLocaleString('pt-BR')}`;
         // Função de inicialização
         function initialize() {
             try {
-                console.log('🚀 Inicializando Sistema de Histórico de Doações...');
+                console.log('Inicializando Sistema de Histórico de Doações...');
                 
                 if (!window.jspdf) {
-                    console.warn('⚠️ jsPDF não carregado - algumas funcionalidades podem não funcionar');
+                    console.warn('jsPDF não carregado - algumas funcionalidades podem não funcionar');
                 }
                 
                 if (!window.Chart) {
-                    console.warn('⚠️ Chart.js não carregado - gráficos podem não funcionar');
+                    console.warn('Chart.js não carregado - gráficos podem não funcionar');
                 }
                 
                 initializeEventListeners();
                 renderTable();
                 updateActiveFiltersCount();
                 
-                console.log('✅ Sistema inicializado com sucesso!');
+                console.log('Sistema inicializado com sucesso!');
                 
                 setTimeout(() => {
                     notification.show(
-                        `🎉 Sistema carregado com sucesso!<br>
+                        `Sistema carregado com sucesso!<br>
                         <strong>${donations.length}</strong> registros carregados<br>
                         <em>Toggle de filtros corrigido</em>`, 
                         'info', 
@@ -655,7 +655,7 @@ Data de geração: ${new Date().toLocaleString('pt-BR')}`;
                 }, 1000);
                 
             } catch (error) {
-                console.error('❌ Erro na inicialização:', error);
+                console.error('Erro na inicialização:', error);
                 notification.show('Erro ao inicializar o sistema. Recarregue a página.', 'error');
             }
         }
@@ -713,4 +713,4 @@ Data de geração: ${new Date().toLocaleString('pt-BR')}`;
             }
         };
         
-        console.log('🔧 API disponível:', 'window.DonationSystem');
+        console.log('API disponível:', 'window.DonationSystem');
