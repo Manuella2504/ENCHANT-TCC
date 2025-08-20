@@ -212,6 +212,10 @@ main {
   transition: background-color 0.3s, transform 0.2s;
 }
 
+.texto{
+  text-decoration: none;
+}
+
 .design-botao:hover {
   background-color: #caae8d;
   color: #3d2106;
