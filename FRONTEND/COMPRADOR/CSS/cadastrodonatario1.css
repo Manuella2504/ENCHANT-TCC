@@ -790,7 +790,6 @@ input[type="radio"], input[type="checkbox"] {
 #continuar1:hover {
   background-color: #caae8d;
   color: #3d2106;
-  border: 1px solid #d8b48bce;
 }
 
 #continuar3:hover {
