@@ -203,6 +203,11 @@
               .navbar-toggler {
                   display: none;
               }
+              
+              /* Remove hover em desktop para evitar conflitos */
+              .profile-dropdown:hover .dropdown-menu {
+                  display: block;
+              }
             }
 
             @media (min-width: 1024px) and (max-width: 1400px) {
@@ -221,6 +226,11 @@
             }
 
             @media (max-width: 1023px) {
+                /* Remove hover em mobile */
+                .profile-dropdown:hover .dropdown-menu {
+                    display: none !important;
+                }
+                
                 .navbar-collapse {
                     position: absolute;
                     top: 100%;
@@ -252,7 +262,7 @@
                 }
                 
                 .profile-dropdown {
-                    position: static;
+                    position: relative;
                     transform: none;
                     width: 100%;
                     margin-top: 5px;
@@ -262,18 +272,25 @@
                     width: 100%;
                     justify-content: flex-start;
                     padding: 8px 10px;
+                    position: relative;
                 }
                 
-                .dropdown-menu {
-                    position: static;
-                    width: 100%;
-                    box-shadow: none;
-                    padding-left: 20px;
-                    background: none;
+                #dropzinho {
+                    position: absolute !important;
+                    top: 100% !important;
+                    left: 0 !important;
+                    right: auto !important;
+                    width: 200px !important;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+                    background: #ECECEC !important;
+                    border-radius: 8px !important;
+                    padding: 10px !important;
+                    z-index: 1001 !important;
                 }
 
                 .dropdown-item {
-                    padding: 8px 0;
+                    padding: 8px 15px;
+                    width: 100%;
                 }
 
                 .bi-three-dots {
@@ -368,65 +385,174 @@
         const toggleButton = document.getElementById('icone');
         const usuarioBtn = document.getElementById("usuario");
         const dropdownMenu = document.getElementById("dropzinho");
+        
+        let dropdownEventListeners = [];
+
+        // Função para limpar event listeners antigos
+        function clearDropdownListeners() {
+            dropdownEventListeners.forEach(({ element, event, handler }) => {
+                element.removeEventListener(event, handler);
+            });
+            dropdownEventListeners = [];
+        }
+
+        // Função para adicionar event listener e rastrear
+        function addDropdownListener(element, event, handler) {
+            element.addEventListener(event, handler);
+            dropdownEventListeners.push({ element, event, handler });
+        }
+
+        // Função para verificar se é mobile
+        function isMobileDevice() {
+            return window.innerWidth <= 1023;
+        }
+
+        // Função para fechar dropdown
+        function closeDropdown() {
+            if (dropdownMenu) {
+                dropdownMenu.style.display = "none";
+            }
+        }
+
+        // Função para abrir dropdown
+        function openDropdown() {
+            if (dropdownMenu) {
+                dropdownMenu.style.display = "block";
+            }
+        }
+
+        // Função para toggle dropdown
+        function toggleDropdown() {
+            if (dropdownMenu) {
+                const isVisible = dropdownMenu.style.display === "block";
+                dropdownMenu.style.display = isVisible ? "none" : "block";
+            }
+        }
 
         // Funções auxiliares
         function setupProfileDropdown() {
             if (!usuarioBtn || !dropdownMenu) return;
 
-            const isMobile = window.innerWidth <= 1023;
+            // Limpar listeners antigos
+            clearDropdownListeners();
+            
+            // Sempre fechar o dropdown primeiro
+            closeDropdown();
 
-            if (isMobile) {
-                usuarioBtn.addEventListener("click", function (e) {
+            if (isMobileDevice()) {
+                // Configuração para mobile
+                const clickHandler = function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
-                });
+                    toggleDropdown();
+                };
 
-                document.addEventListener("click", function (e) {
+                const documentClickHandler = function(e) {
+                    // Se o clique foi fora do botão e do dropdown, fechar
                     if (!usuarioBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                        dropdownMenu.style.display = "none";
+                        closeDropdown();
                     }
-                });
+                };
+
+                addDropdownListener(usuarioBtn, "click", clickHandler);
+                addDropdownListener(document, "click", documentClickHandler);
+                
+                // Fechar dropdown quando o menu navbar fechar
+                if (navbarCollapse) {
+                    const collapseHandler = function() {
+                        closeDropdown();
+                    };
+                    addDropdownListener(navbarCollapse, 'hidden.bs.collapse', collapseHandler);
+                }
+
             } else {
+                // Configuração para desktop (hover)
                 const profileDropdown = document.querySelector(".profile-dropdown");
                 if (profileDropdown) {
-                    profileDropdown.addEventListener("mouseenter", function () {
-                        dropdownMenu.style.display = "block";
-                    });
-                    profileDropdown.addEventListener("mouseleave", function () {
-                        dropdownMenu.style.display = "none";
-                    });
+                    const mouseEnterHandler = function() {
+                        openDropdown();
+                    };
+                    
+                    const mouseLeaveHandler = function() {
+                        closeDropdown();
+                    };
+
+                    addDropdownListener(profileDropdown, "mouseenter", mouseEnterHandler);
+                    addDropdownListener(profileDropdown, "mouseleave", mouseLeaveHandler);
                 }
             }
         }
 
-        // Configuração de eventos
+        // Configuração de eventos do navbar
         if (window.bootstrap && navbarCollapse) {
             new bootstrap.Collapse(navbarCollapse, { toggle: false });
+            
+            // Evento quando o menu colapsa (fecha)
             navbarCollapse.addEventListener('hidden.bs.collapse', function () {
                 if (toggleButton) {
                     toggleButton.classList.remove('collapsed');
                     toggleButton.setAttribute('aria-expanded', 'false');
                 }
+                // Fechar dropdown quando navbar fechar
+                closeDropdown();
+            });
+            
+            // Evento quando o menu está se fechando
+            navbarCollapse.addEventListener('hide.bs.collapse', function () {
+                closeDropdown();
             });
         }
 
         if (toggleButton) {
-            toggleButton.addEventListener('click', function () {
+            toggleButton.addEventListener('click', function (e) {
+                e.stopPropagation();
+                
                 if (navbarCollapse) {
+                    const isCurrentlyExpanded = navbarCollapse.classList.contains('show');
+                    
+                    // Se está expandido, vai fechar - então fechar dropdown também
+                    if (isCurrentlyExpanded) {
+                        closeDropdown();
+                    }
+                    
                     navbarCollapse.classList.toggle('show');
                     const isExpanded = navbarCollapse.classList.contains('show');
                     toggleButton.setAttribute('aria-expanded', isExpanded);
+                    
+                    // Se fechou o menu, garantir que dropdown também fechou
+                    if (!isExpanded) {
+                        setTimeout(closeDropdown, 50);
+                    }
                 }
             });
         }
-
-        window.addEventListener("resize", function () {
-            setupProfileDropdown();
+        
+        // Fechar menu e dropdown quando clicar fora (mobile)
+        document.addEventListener('click', function(e) {
+            if (isMobileDevice() && navbarCollapse && toggleButton) {
+                // Se clicou fora do navbar e ele está aberto
+                if (!navbarCollapse.contains(e.target) && 
+                    !toggleButton.contains(e.target) && 
+                    navbarCollapse.classList.contains('show')) {
+                    
+                    navbarCollapse.classList.remove('show');
+                    toggleButton.setAttribute('aria-expanded', 'false');
+                    closeDropdown();
+                }
+            }
         });
 
-        // Chamadas de funções de setup ao carregar a página
-        setupProfileDropdown();
+        // Event listener para resize
+        let resizeTimeout;
+        window.addEventListener("resize", function () {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                setupProfileDropdown();
+            }, 150);
+        });
+
+        // Setup inicial
+        setTimeout(setupProfileDropdown, 100);
     }
 
     // Executa a função de inicialização quando o DOM estiver carregado
