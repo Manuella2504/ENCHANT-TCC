@@ -4,9 +4,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const senhaInput = document.getElementById('senha');
     const confirmaSenhaInput = document.getElementById('confirma-senha');
     const emailInput = document.getElementById('email');
-    const botaoContinuar = document.getElementById('botao');
+    
+    // --- CORREÇÃO: IDs dos botões ajustados para 'bootao' e 'bootao2' ---
+    const botaoContinuar = document.getElementById('bootao');
     const botaoVoltar = document.getElementById('botao1');
-    const botaoConfirmar = document.getElementById('botao2');
+    const botaoConfirmar = document.getElementById('bootao2');
+
     const botoesExibirSenha = document.querySelectorAll('.mostrar-senha');
     const cnpjInput = document.getElementById('cnpj');
     const cpfInput = document.getElementById('cpf');
@@ -43,17 +46,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // Função para alternar entre as etapas
     function irParaEtapa(etapa) {
         if (etapa === 1) {
-            parte1.style.display = 'block';
-            parte2.style.display = 'none';
+            if (parte1) parte1.style.display = 'block';
+            if (parte2) parte2.style.display = 'none';
             // Atualiza indicador de passos
-            passos[0].classList.add('ativo');
-            passos[1].classList.remove('ativo');
+            if (passos.length > 1) {
+                passos[0].classList.add('ativo');
+                passos[1].classList.remove('ativo');
+            }
         } else if (etapa === 2) {
-            parte1.style.display = 'none';
-            parte2.style.display = 'block';
+            if (parte1) parte1.style.display = 'none';
+            if (parte2) parte2.style.display = 'block';
             // Atualiza indicador de passos
-            passos[0].classList.remove('ativo');
-            passos[1].classList.add('ativo');
+            if (passos.length > 1) {
+                passos[0].classList.remove('ativo');
+                passos[1].classList.add('ativo');
+            }
         }
     }
 
@@ -203,8 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function formatarRG(input) {
         let value = input.value.replace(/[^\dXx]/g, '').toUpperCase();
         if (value.length > 9) value = value.slice(0, 9);
-        
-        // Formato comum de RG: XX.XXX.XXX-X
+
         if (value.length > 2) {
             value = value.replace(/^(\d{2})(\d)/, "$1.$2");
             if (value.length > 6) {
@@ -238,15 +244,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (value.length > 6) {
             if (value.length > 10) {
-                // Formato celular: (99)99999-9999
-                value = value.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1)$2-$3");
+                // Formato celular: (99) 99999-9999
+                value = value.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
             } else {
-                // Formato fixo: (99)9999-9999
-                value = value.replace(/^(\d{2})(\d{4})(\d{0,4})$/, "($1)$2-$3");
+                // Formato fixo: (99) 9999-9999
+                value = value.replace(/^(\d{2})(\d{4})(\d{0,4})$/, "($1) $2-$3");
             }
         } else if (value.length > 2) {
             // Só o DDD: (99)
-            value = value.replace(/^(\d{2})(\d{0,5})$/, "($1)$2");
+            value = value.replace(/^(\d{2})(\d{0,5})$/, "($1) $2");
         }
         
         input.value = value;
@@ -262,10 +268,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const validacao = validarSenha(senha);
             
             // Verificar se todos os campos estão preenchidos
-            const nomeOng = document.getElementById('nome-ong').value;
+            const nomeDoador = document.getElementById('nome-ong').value;
             const email = emailInput.value;
             
-            if (!nomeOng || !email || !senha || !confirmaSenhaInput.value) {
+            if (!nomeDoador || !email || !senha || !confirmaSenhaInput.value) {
                 mostrarModal('<p>Por favor, preencha todos os campos obrigatórios!</p>');
                 return;
             }
@@ -280,23 +286,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Verificar cada requisito da senha
             const erros = [];
             
-            if (!validacao.temOitoDigitos) {
-                erros.push('Mínimo 8 dígitos');
-            }
+            if (!validacao.temOitoDigitos) erros.push('Mínimo 8 dígitos');
+            if (!validacao.temDoisNumeros) erros.push('Pelo menos 2 números');
+            if (!validacao.temCaractereEspecial) erros.push('Pelo menos 1 caractere especial');
+            if (!validacao.temLetraMaiuscula) erros.push('Pelo menos 1 letra MAIÚSCULA');
             
-            if (!validacao.temDoisNumeros) {
-                erros.push('Pelo menos 2 números');
-            }
-            
-            if (!validacao.temCaractereEspecial) {
-                erros.push('Pelo menos 1 caractere especial');
-            }
-            
-            if (!validacao.temLetraMaiuscula) {
-                erros.push('Pelo menos 1 letra MAIÚSCULA');
-            }
-            
-            // Se houver erros na validação da senha
             if (erros.length > 0) {
                 let mensagemErro = '<p>A senha não atende aos seguintes requisitos:</p><ul>';
                 erros.forEach(erro => {
@@ -330,49 +324,42 @@ document.addEventListener('DOMContentLoaded', function() {
     // Adicionar evento de clique ao botão confirmar
     if (botaoConfirmar) {
         botaoConfirmar.addEventListener('click', function(event) {
-            // Verificar se todos os campos necessários estão preenchidos
-            const cpf = document.getElementById('cpf').value;
-            const rg = document.getElementById('rg').value;
-            const telefone = document.getElementById('telefone').value;
+            event.preventDefault(); // Prevenir qualquer comportamento padrão
+
+            const cpf = cpfInput.value;
+            const rg = rgInput.value;
+            const telefone = telefoneInput.value;
             
             if (!cpf || !rg || !telefone) {
-                event.preventDefault();
                 mostrarModal('<p>Por favor, preencha todos os campos obrigatórios!</p>');
                 return;
             }
             
-            // Validar CPF
             const cpfLimpo = cpf.replace(/[^\d]/g, '');
             if (!validarCPF(cpfLimpo)) {
-                event.preventDefault();
                 mostrarModal('<p>Por favor, insira um CPF válido!</p>');
                 return;
             }
             
-            // Validar RG (validação básica)
             const rgLimpo = rg.replace(/[^\dXx]/g, '').toUpperCase();
             if (!validarRG(rgLimpo)) {
-                event.preventDefault();
                 mostrarModal('<p>Por favor, insira um RG válido!</p>');
                 return;
             }
             
-            // Validar telefone
             const telefoneLimpo = telefone.replace(/[^\d]/g, '');
             if (!validarTelefone(telefoneLimpo)) {
-                event.preventDefault();
                 mostrarModal('<p>Por favor, insira um número de telefone válido!</p>');
                 return;
             }
             
-            // Verificar se os termos foram aceitos
             if (!termosCheckbox.checked) {
-                event.preventDefault();
                 mostrarModal('<p>Você precisa aceitar os termos de uso e a política de privacidade para continuar!</p>');
                 return;
             }
             
-            // Se tudo estiver ok, o formulário será enviado
+            // --- NOVO: Se tudo estiver ok, redireciona para a página de início ---
+            window.location.href = 'inicio2.html';
         });
     }
 
@@ -382,12 +369,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const validacao = validarSenha(this.value);
             const requisitos = document.querySelectorAll('.requisitos-secundarios');
             
-            // Atualizar estilo visual dos requisitos
             if (requisitos.length >= 4) {
-                requisitos[0].style.color = validacao.temOitoDigitos ? 'green' : '';
-                requisitos[1].style.color = validacao.temDoisNumeros ? 'green' : '';
-                requisitos[2].style.color = validacao.temCaractereEspecial ? 'green' : '';
-                requisitos[3].style.color = validacao.temLetraMaiuscula ? 'green' : '';
+                requisitos[0].style.color = validacao.temOitoDigitos ? 'green' : 'red';
+                requisitos[1].style.color = validacao.temDoisNumeros ? 'green' : 'red';
+                requisitos[2].style.color = validacao.temCaractereEspecial ? 'green' : 'red';
+                requisitos[3].style.color = validacao.temLetraMaiuscula ? 'green' : 'red';
             }
         });
     }
@@ -396,11 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (confirmaSenhaInput) {
         confirmaSenhaInput.addEventListener('input', function() {
             if (senhaInput.value && this.value) {
-                if (senhasCoincidentes()) {
-                    this.style.borderColor = 'green';
-                } else {
-                    this.style.borderColor = 'red';
-                }
+                this.style.borderColor = senhasCoincidentes() ? 'green' : 'red';
             } else {
                 this.style.borderColor = '';
             }
@@ -411,11 +393,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (emailInput) {
         emailInput.addEventListener('input', function() {
             if (this.value) {
-                if (validarEmail(this.value)) {
-                    this.style.borderColor = 'green';
-                } else {
-                    this.style.borderColor = 'red';
-                }
+                this.style.borderColor = validarEmail(this.value) ? 'green' : 'red';
             } else {
                 this.style.borderColor = '';
             }
@@ -426,14 +404,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (cpfInput) {
         cpfInput.addEventListener('input', function() {
             formatarCPF(this);
-            
-            if (this.value) {
-                const cpfLimpo = this.value.replace(/[^\d]/g, '');
-                if (cpfLimpo.length === 11 && validarCPF(cpfLimpo)) {
-                    this.style.borderColor = 'green';
-                } else {
-                    this.style.borderColor = cpfLimpo.length === 11 ? 'red' : '';
-                }
+            const cpfLimpo = this.value.replace(/[^\d]/g, '');
+            if (cpfLimpo.length === 11) {
+                this.style.borderColor = validarCPF(cpfLimpo) ? 'green' : 'red';
             } else {
                 this.style.borderColor = '';
             }
@@ -444,32 +417,22 @@ document.addEventListener('DOMContentLoaded', function() {
     if (rgInput) {
         rgInput.addEventListener('input', function() {
             formatarRG(this);
-            
-            if (this.value) {
-                const rgLimpo = this.value.replace(/[^\dXx]/g, '').toUpperCase();
-                if (validarRG(rgLimpo)) {
-                    this.style.borderColor = 'green';
-                } else {
-                    this.style.borderColor = rgLimpo.length >= 8 ? 'red' : '';
-                }
+            const rgLimpo = this.value.replace(/[^\dXx]/g, '').toUpperCase();
+             if (rgLimpo.length >= 8) {
+                this.style.borderColor = validarRG(rgLimpo) ? 'green' : 'red';
             } else {
                 this.style.borderColor = '';
             }
         });
     }
     
-    // Validação e formatação em tempo real do CNPJ
+    // Validação e formatação em tempo real do CNPJ (se existir)
     if (cnpjInput) {
         cnpjInput.addEventListener('input', function() {
             formatarCNPJ(this);
-            
-            if (this.value) {
-                const cnpjLimpo = this.value.replace(/[^\d]/g, '');
-                if (cnpjLimpo.length === 14 && validarCNPJ(cnpjLimpo)) {
-                    this.style.borderColor = 'green';
-                } else {
-                    this.style.borderColor = cnpjLimpo.length === 14 ? 'red' : '';
-                }
+            const cnpjLimpo = this.value.replace(/[^\d]/g, '');
+            if (cnpjLimpo.length === 14) {
+                this.style.borderColor = validarCNPJ(cnpjLimpo) ? 'green' : 'red';
             } else {
                 this.style.borderColor = '';
             }
@@ -480,84 +443,32 @@ document.addEventListener('DOMContentLoaded', function() {
     if (telefoneInput) {
         telefoneInput.addEventListener('input', function() {
             formatarTelefone(this);
-            
-            if (this.value) {
-                const telefoneLimpo = this.value.replace(/[^\d]/g, '');
-                if ((telefoneLimpo.length === 10 || telefoneLimpo.length === 11) && validarTelefone(telefoneLimpo)) {
-                    this.style.borderColor = 'green';
-                } else {
-                    this.style.borderColor = (telefoneLimpo.length >= 10) ? 'red' : '';
-                }
+            const telefoneLimpo = this.value.replace(/[^\d]/g, '');
+            if (telefoneLimpo.length >= 10) {
+                this.style.borderColor = validarTelefone(telefoneLimpo) ? 'green' : 'red';
             } else {
                 this.style.borderColor = '';
             }
         });
     }
     
-    // Funcionalidade para mostrar o ícone de olho apenas durante a digitação
-    const camposSenha = [senhaInput, confirmaSenhaInput].filter(campo => campo !== null);
-    
-    camposSenha.forEach((campo, index) => {
-        // Configurar temporizador para ocultar o ícone
-        let temporizador;
-        
-        // Mostrar o ícone quando o usuário começa a digitar
-        campo.addEventListener('input', function() {
-            const botaoExibir = botoesExibirSenha[index];
-            
-            // Mostrar o ícone enquanto o usuário estiver digitando
-            if (campo.value) {
-                botaoExibir.style.display = 'inline-block';
-                botaoExibir.innerHTML = '<i class="mostrar-senha"></i>';
-                
-                // Limpar o temporizador anterior
-                clearTimeout(temporizador);
-                
-                // Configurar temporizador para ocultar o ícone após 3 segundos
-                temporizador = setTimeout(() => {
-                    botaoExibir.style.display = 'none';
-                }, 3000);
-            } else {
-                botaoExibir.style.display = 'none';
-            }
-        });
-        
-        // Inicialmente ocultar os ícones
-        if (botoesExibirSenha[index]) {
-            botoesExibirSenha[index].style.display = 'none';
-        }
-        
-        // Garantir que o campo volte para tipo password quando o ícone desaparecer
-        if (botoesExibirSenha[index]) {
-            botoesExibirSenha[index].addEventListener('transitionend', function() {
-                if (this.style.display === 'none' && campo.type === 'text') {
-                    campo.type = 'password';
-                }
-            });
-        }
-    });
-    
-    // Manter a funcionalidade de alternância do tipo de campo para os ícones
-    botoesExibirSenha.forEach(function(botao, index) {
+    // Funcionalidade para mostrar/ocultar senha
+    botoesExibirSenha.forEach(function(botao) {
         if (!botao) return;
-        
-        let temporizador;
         
         botao.addEventListener('click', function() {
             const input = this.previousElementSibling;
-            if (input.type === 'password') {
-                input.type = 'text';
-                this.innerHTML = '<i class="mostrar-senha"></i>';
-            } else {
-                input.type = 'password';
-                this.innerHTML = '<i class="mostrar-senha"></i>';
+            if (input) {
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    // Você pode adicionar um ícone de "olho aberto" aqui se quiser
+                    // this.innerHTML = '<i class="bi bi-eye"></i>'; 
+                } else {
+                    input.type = 'password';
+                    // E um ícone de "olho fechado" aqui
+                    // this.innerHTML = '<i class="bi bi-eye-slash"></i>';
+                }
             }
-            
-            // Reiniciar o temporizador ao clicar no ícone
-            clearTimeout(temporizador);
-            temporizador = setTimeout(() => {
-                this.style.display = 'none';
-            }, 3000);
         });
     });
 });
