@@ -37,7 +37,7 @@ h1 {
     display: flex;
     flex-direction: start;
   font-family: "Passion One", sans-serif;
-  font-weight: 700;
+  font-weight: 100;
   color: var(--primary-color);
   font-size: 32px;
   margin-bottom: 10px;
