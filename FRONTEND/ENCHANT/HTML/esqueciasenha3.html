@@ -51,7 +51,7 @@
 
     <form id="passwordForm">
       <section class="containertitle">
-        <h1 class="h1">Redefina a senha</h1>
+        <h1 class="title">Redefina a senha</h1>
         <p class="pcd1">Defina a nova senha:</p>
       </section>
 
@@ -168,9 +168,16 @@
    <script src="../JS/headerenchant.js"></script>
 
    <script>
-     const header = new HeaderComponent();
-      header.render("header-container");
-   </script>
+    
+      document.addEventListener('DOMContentLoaded', function() {
+        // Carregar Bootstrap e FontAwesome automaticamente
+        HeaderComponent.loadDependencies();
+        
+        // Renderizar o header no container
+        initializeHeader('header-container');
+        
+          });
+              </script>
 </body>
 
 </html>

@@ -99,6 +99,68 @@ class HeaderComponent {
       #icone {
         border: none;
         outline: none;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      #icone:focus {
+        box-shadow: none;
+        outline: none;
+      }
+
+      /* ANIMAÇÃO DO TOGGLER HAMBÚRGUER */
+      .navbar-toggler-icon {
+        background-image: none !important;
+        position: relative;
+        width: 20px;
+        height: 2px;
+        background-color: #333;
+        transition: all 0.3s ease;
+        transform-origin: center;
+      }
+
+      .navbar-toggler-icon::before,
+      .navbar-toggler-icon::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        width: 20px;
+        height: 2px;
+        background-color: #333;
+        transition: all 0.3s ease;
+        transform-origin: center;
+      }
+
+      .navbar-toggler-icon::before {
+        top: -6px;
+      }
+
+      .navbar-toggler-icon::after {
+        bottom: -6px;
+      }
+
+      /* Estado ativo - transforma em X */
+      #icone.active .navbar-toggler-icon {
+        background-color: transparent;
+      }
+
+      #icone.active .navbar-toggler-icon::before {
+        top: 0;
+        transform: rotate(45deg);
+      }
+
+      #icone.active .navbar-toggler-icon::after {
+        bottom: 0;
+        transform: rotate(-45deg);
+      }
+
+      /* Animação suave do botão inteiro */
+      #icone:hover {
+        transform: scale(1.05);
+      }
+
+      #icone:active {
+        transform: scale(0.95);
       }
 
       .btn-brown,
@@ -127,23 +189,58 @@ class HeaderComponent {
         text-decoration: none;
       }
 
-      /* ANIMAÇÃO SIMPLES DO MENU MOBILE */
-      .navbar-collapse {
-        overflow: hidden;
-        transition: max-height 0.3s ease-in-out, opacity 0.2s ease-in-out;
-        max-height: 0;
-        opacity: 0;
+      /* ANIMAÇÃO APENAS PARA MOBILE - telas menores que 992px */
+      @media (max-width: 991px) {
+        .navbar-collapse {
+          transition: max-height 1.5s ease-out, padding 1.5s ease-out;
+          max-height: 0;
+          overflow: hidden;
+          padding-top: 0;
+          padding-bottom: 0;
+        }
+
+        .navbar-collapse.show {
+          max-height: 300px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+        }
+
+        .navbar-collapse.collapsing {
+          max-height: 0;
+          padding-top: 0;
+          padding-bottom: 0;
+          transition: max-height 1.5s ease-out, padding 1.5s ease-out;
+        }
       }
 
-      .navbar-collapse.show {
-        max-height: 500px;
+      /* COMPORTAMENTO NORMAL PARA DESKTOP - telas maiores que 991px */
+      @media (min-width: 992px) {
+        .navbar-collapse {
+          display: flex !important;
+          flex-basis: auto;
+          max-height: none;
+          overflow: visible;
+          padding: 0;
+          opacity: 1;
+          transition: none;
+        }
+
+        .navbar-collapse.show,
+        .navbar-collapse.collapsing {
+          display: flex !important;
+          max-height: none;
+          overflow: visible;
+          padding: 0;
+          transition: none;
+        }
+      }
+
+      /* Remover animações dos itens - deixar simples */
+      .navbar-collapse .nav-item,
+      .navbar-collapse .btn-brown {
         opacity: 1;
-      }
-
-      .navbar-collapse.collapsing {
-        max-height: 0;
-        opacity: 0;
-        transition: max-height 0.3s ease-in-out, opacity 0.2s ease-in-out;
+        transform: none;
+        transition: none;
       }
 
       /* RESPONSIVIDADE PARA HEADER */
@@ -267,29 +364,20 @@ class HeaderComponent {
     const target = document.getElementById('conteudoNavbarSuportado');
     
     if (toggler && target) {
-      // Evento principal do toggler - ABRE e FECHA o menu
+      // Evento principal do toggler - ABRE e FECHA o menu APENAS EM MOBILE
       toggler.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
         
-        // TOGGLE - Se está fechado ABRE, se está aberto FECHA
-        const isCurrentlyOpen = target.classList.contains('show');
-        
-        if (isCurrentlyOpen) {
-          // FECHAR o menu
-          target.classList.add('collapsing');
-          target.classList.remove('show');
-          toggler.setAttribute('aria-expanded', 'false');
+        // Só aplica animação em telas mobile
+        if (window.innerWidth <= 991) {
+          const isCurrentlyOpen = target.classList.contains('show');
           
-          setTimeout(() => {
-            target.classList.remove('collapsing');
-          }, 300);
-          
-        } else {
-          // ABRIR o menu
-          target.classList.remove('collapsing');
-          target.classList.add('show');
-          toggler.setAttribute('aria-expanded', 'true');
+          if (isCurrentlyOpen) {
+            this.closeMenu(toggler, target);
+          } else {
+            this.openMenu(toggler, target);
+          }
         }
       });
 
@@ -298,50 +386,61 @@ class HeaderComponent {
       navLinks.forEach(link => {
         link.addEventListener('click', () => {
           if (window.innerWidth <= 991 && target.classList.contains('show')) {
-            target.classList.add('collapsing');
-            target.classList.remove('show');
-            toggler.setAttribute('aria-expanded', 'false');
-            
-            setTimeout(() => {
-              target.classList.remove('collapsing');
-            }, 300);
+            this.closeMenu(toggler, target);
           }
         });
       });
 
-      // Fechar menu ao clicar fora dele
+      // Fechar menu ao clicar fora dele (apenas mobile)
       document.addEventListener('click', (e) => {
         if (window.innerWidth <= 991 && 
             !toggler.contains(e.target) && 
             !target.contains(e.target) && 
             target.classList.contains('show')) {
           
-          target.classList.add('collapsing');
-          target.classList.remove('show');
-          toggler.setAttribute('aria-expanded', 'false');
-          
-          setTimeout(() => {
-            target.classList.remove('collapsing');
-          }, 300);
+          this.closeMenu(toggler, target);
         }
       });
 
-      // Fechar menu ao pressionar ESC
+      // Fechar menu ao pressionar ESC (apenas mobile)
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && 
             window.innerWidth <= 991 && 
             target.classList.contains('show')) {
           
-          target.classList.add('collapsing');
-          target.classList.remove('show');
+          this.closeMenu(toggler, target);
+        }
+      });
+
+      // Limpar classes ao redimensionar para desktop
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 991) {
+          target.classList.remove('show', 'collapsing');
+          toggler.classList.remove('active');
           toggler.setAttribute('aria-expanded', 'false');
-          
-          setTimeout(() => {
-            target.classList.remove('collapsing');
-          }, 300);
         }
       });
     }
+  }
+
+  // Método para abrir o menu com animação
+  openMenu(toggler, target) {
+    target.classList.remove('collapsing');
+    target.classList.add('show');
+    toggler.setAttribute('aria-expanded', 'true');
+    toggler.classList.add('active');
+  }
+
+  // Método para fechar o menu - tempo correto
+  closeMenu(toggler, target) {
+    target.classList.add('collapsing');
+    target.classList.remove('show');
+    toggler.setAttribute('aria-expanded', 'false');
+    toggler.classList.remove('active');
+    
+    setTimeout(() => {
+      target.classList.remove('collapsing');
+    }, 1500); // 1.5 segundos para coincidir
   }
 
   // Método para configurar os caminhos das páginas
