@@ -19,41 +19,7 @@
 
 <body>
     <section>
-        <header>
-            <nav id="fixado" class="navbar navbar-expand-lg navbar-light bg-light">
-                <!-- Imagem à esquerda da navbar -->
-                <a class="navbar-brand" href="../index.html">
-                    <img src="https://i.postimg.cc/g0RvMKxc/2475bcce-285c-4b1b-b92b-8e3b0680fef1.png" width="120"
-                        height="auto" alt="Logo Enchant" class="img" />
-                </a>
-                <button id="icone" class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false"
-                    aria-label="Alterna navegação">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
-                    <ul class="navbar-nav menu-lateral">
-                        <li class="nav-item">
-                            <a id="quem" class="nav-link" href="quemsomos1.html" title="Quem somos">Quem somos?</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="saiba" class="nav-link" href="saibamais1.html" title="Saiba mais">Saiba mais</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="entrar" class="nav-link" href="entrar1.html" title="Entrar">Entrar</a>
-                        </li>
-                    </ul>
-                    <!-- O botão permanece inalterado -->
-                    <a href="../index.html" style="text-decoration: none !important;">
-                        <button class="btn btn-brown" type="button" id="doeagora" style="text-decoration: none !important;">
-                            Junte-se a nós
-                        </button>
-                    </a>
-                </div>
-            </nav>
-        </header>
-    </section>
+       <div id="header-container"></div>
 
     <div class="container">
         <button class="mobile-nav-toggle" id="mobileNavToggle">
@@ -258,7 +224,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-
+    <script src="../JS/headerenchant.js"></script>
+    <script>
+         const header = new HeaderComponent();
+      header.render("header-container");
+        </script>
     <script src="../JS/saibamais1.js"></script>
 </body>
 

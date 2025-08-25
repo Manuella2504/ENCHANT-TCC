@@ -17,89 +17,8 @@
 </head>
 <body>
 
-    <section>
-        <header>
-            <nav id="fixado" class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="../index.html">
-                    <img src="../IMAGENS/imagemprincipal.png" width="120" height="auto" alt="Logo" class="img"/>
-                </a>
-                <button
-                    id="icone"
-                    class="navbar-toggler"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#conteudoNavbarSuportado"
-                    aria-controls="conteudoNavbarSuportado"
-                    aria-expanded="false"
-                    aria-label="Alterna navegação">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
-                    <ul class="navbar-nav menu-lateral">
-                        <li class="nav-item">
-                            <a id="quem" class="nav-link" href="quemsomos1.html" title="Quem somos">Quem somos?</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="saiba" class="nav-link" href="saibamais1.html" title="Saiba mais">Saiba mais</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="entrar" class="nav-link" href="entrar1.html" title="Entrar">Entrar</a>
-                        </li>
-                    </ul>
-                    <a href="../index.html">
-                        <button class="btn btn-brown" type="button" id="doeagora">
-                            Junte-se a nós
-                        </button>
-                    </a>
-                </div>
-            </nav>
-        </header>
-    </section>
-    
-    <main id="main-conatiner">
-        <div style="margin-top: 13vh;" class="container">
-            <h1 class="titulo">Requisição e Gratuidade</h1>
-
-            <div class="passos-container">
-                <div class="passo ativo" id="passo1">1° passo</div>
-                <div class="passo" id="passo2">2° passo</div>
-            </div>
-
-            <section class="primeira-parte-cadastro">
-                <div class="formulario" id="etapa1">
-                    <form id="formEtapa1">
-                        <div class="campo">
-                            <p class="aviso">Recomendamos atenção total ao preencher os dados nos campos solicitados. É fundamental que as informações sejam inseridas de forma responsável, a fim de evitar fraudes. Os dados fornecidos serão analisados em até 48 horas para verificar a legitimidade da instituição e garantir, quando for o caso, o acesso à gratuidade destinada a organizações de baixa renda.</p>
-                        </div>
-                        <div class="campo">
-                            <label for="nome-completo">Nome completo da ONG: <span class="obrigatorio">*</span></label>
-                            <input type="text" id="nome-completo" name="nome-completo" placeholder="Digite seu nome completo" >
-                        </div>
-                        <div class="campo">
-                            <label for="email">E-mail: <span class="obrigatorio">*</span></label>
-                            <input type="email" id="email" name="email" placeholder="exemplo@email.com" required>
-                        </div>
-                        <div class="campo">
-                            <label for="numero-cep">CEP: <span class="obrigatorio">*</span></label>
-                            <input type="text" id="numero-cep" name="cep" placeholder="00000-000" required>
-                        </div> 
-                        <div class="campo">
-                            <label for="numero-cnpj">CNPJ: <span class="obrigatorio">*</span></label>
-                            <input type="text" id="numero-cnpj" name="cnpj" placeholder="00.000.000/0000-00" required>
-                        </div> 
-                        <div class="campo">
-                            <label for="complemento">Complemento: <span class="obrigatorio">*</span></label>
-                            <input type="text" id="complemento" name="complemento" placeholder="Descreva mais sobre a sua ONG" required>
-                        </div> 
-                        <section>
-                            <div class="botoes">
-                                <button id="btn-continuar" type="submit">Continuar</button>
-                            </div>
-                        </section>
-                    </form>
-                </div>
-            </section>
-
+     <div id="header-container"></div>
+      
             <section class="segunda-parte-cadastro d-none">
                 <div class="formulario" id="etapa2">
                     <form id="formEtapa2">
@@ -228,6 +147,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <SCRIPT SRC="../JS/headerenchant.js"></SCRIPT>
+  <script>
+      const header = new HeaderComponent();
+      header.render("header-container");
+      </script>
     <script src="../JS/requisicao.js"></script>
 </body>
 </html>
